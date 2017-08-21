@@ -60,10 +60,9 @@
 		5BE49A661F4B7B2000CCF704 /* Knots */ = {
 			isa = PBXGroup;
 			children = (
+				5BE49A7F1F4B858700CCF704 /* Scenes */,
+				5BE49A801F4B85FB00CCF704 /* GameScripts */,
 				5BE49A671F4B7B2000CCF704 /* AppDelegate.swift */,
-				5BE49A691F4B7B2000CCF704 /* GameScene.sks */,
-				5BE49A6B1F4B7B2000CCF704 /* Actions.sks */,
-				5BE49A6D1F4B7B2000CCF704 /* GameScene.swift */,
 				5BE49A6F1F4B7B2000CCF704 /* GameViewController.swift */,
 				5BE49A711F4B7B2000CCF704 /* Main.storyboard */,
 				5BE49A741F4B7B2000CCF704 /* Assets.xcassets */,
@@ -71,6 +70,23 @@
 				5BE49A791F4B7B2000CCF704 /* Info.plist */,
 			);
 			path = Knots;
+			sourceTree = "<group>";
+		};
+		5BE49A7F1F4B858700CCF704 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				5BE49A691F4B7B2000CCF704 /* GameScene.sks */,
+				5BE49A6B1F4B7B2000CCF704 /* Actions.sks */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		5BE49A801F4B85FB00CCF704 /* GameScripts */ = {
+			isa = PBXGroup;
+			children = (
+				5BE49A6D1F4B7B2000CCF704 /* GameScene.swift */,
+			);
+			name = GameScripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
