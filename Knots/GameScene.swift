@@ -17,6 +17,7 @@ class GameScene: SKScene {
     
     //Set up Rocks on the corner of the screens
     func setupSceneObjects() {
+        //TODO SET UP THE ROCK SIZES
         //Set the x+y coordinate
         //Top Left
         var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/2)
