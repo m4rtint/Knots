@@ -55,14 +55,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         //DEBUG=============
-        self.ship = self.childNode(withName:"ship") as! SKSpriteNode
-        self.ship.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
-        self.ship.physicsBody!.affectedByGravity = false
-        self.ship.physicsBody!.categoryBitMask = PhysicsCategories.Boat
-        self.ship.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse
-        self.ship.physicsBody!.contactTestBitMask = PhysicsCategories.Light
+//        self.ship = self.childNode(withName:"ship") as! SKSpriteNode
+//        self.ship.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
+//        self.ship.physicsBody!.affectedByGravity = false
+//        self.ship.physicsBody!.categoryBitMask = PhysicsCategories.Boat
+//        self.ship.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse
+//        self.ship.physicsBody!.contactTestBitMask = PhysicsCategories.Light
     }
-
+    
+    //Set up Rocks on the corner of the screens
+    func setupSceneObjects() {
+        //TODO SET UP THE ROCK SIZES
+        //Set the x+y coordinate
+        //Top Left
+        var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/2)
+        var yCoordinate:CGFloat = (self.size.height/2)-(rock.size().height/2)
+            
+        var node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        addChild(node)
+        
+        //Top Right
+        xCoordinate = (self.size.width/2)-(rock.size().width/2)
+        yCoordinate = (self.size.height/2)-(rock.size().height/2)
+        
+        node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        addChild(node)
+        
+        //Bottom left
+        xCoordinate = -(self.size.width/2)+(rock.size().width/2)
+        yCoordinate = -(self.size.height/2)+(rock.size().height/2)
+        
+        node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        addChild(node)
+        
+        //Bottom Right
+        xCoordinate = (self.size.width/2)-(rock.size().width/2)
+        yCoordinate = -(self.size.height/2)+(rock.size().height/2)
+        
+        node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        addChild(node)
+    }
+    
+    
+    /*
+ 
+ 
+        Handling All Collision
+ 
+ 
+    */
+    
     //Called when 2 physics bodies (Nodes) make contact
     func didBegin(_ contact: SKPhysicsContact) {
         //Setup and assign bodies
@@ -116,47 +162,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print ("Boat hit the light house")
         }
     }
+
     
     
-    
-    //Set up Rocks on the corner of the screens
-    func setupSceneObjects() {
-        //TODO SET UP THE ROCK SIZES
-        //Set the x+y coordinate
-        //Top Left
-        var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/2)
-        var yCoordinate:CGFloat = (self.size.height/2)-(rock.size().height/2)
-            
-        var node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        addChild(node)
-        
-        //Top Right
-        xCoordinate = (self.size.width/2)-(rock.size().width/2)
-        yCoordinate = (self.size.height/2)-(rock.size().height/2)
-        
-        node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        addChild(node)
-        
-        //Bottom left
-        xCoordinate = -(self.size.width/2)+(rock.size().width/2)
-        yCoordinate = -(self.size.height/2)+(rock.size().height/2)
-        
-        node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        addChild(node)
-        
-        //Bottom Right
-        xCoordinate = (self.size.width/2)-(rock.size().width/2)
-        yCoordinate = -(self.size.height/2)+(rock.size().height/2)
-        
-        node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        addChild(node)
-    }
-    
-    
+    /*
+ 
+ 
+     Handling Light + Light house control
+ 
+ 
+    */
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
