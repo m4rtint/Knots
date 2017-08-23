@@ -195,6 +195,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let rotate = SKAction.rotate(toAngle: angle, duration:lightHouseRotationTimeTaken, shortestUnitArc: true)
         self.light.run(rotate)
+        
+        print("hello")
     }
 
 }
