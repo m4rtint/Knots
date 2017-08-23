@@ -63,13 +63,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody!.contactTestBitMask = PhysicsCategories.Boat
         
         
-        //DEBUG=============
-        //        self.ship = self.childNode(withName:"ship") as! SKSpriteNode
-        //        self.ship.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
-        //        self.ship.physicsBody!.affectedByGravity = false
-        //        self.ship.physicsBody!.categoryBitMask = PhysicsCategories.Boat
-        //        self.ship.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse
-        //        self.ship.physicsBody!.contactTestBitMask = PhysicsCategories.Light
     }
     
     //Set up Rocks on the corner of the screens
@@ -230,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Called Each one a new round happens
     func spawnController (run: Bool) {
         
-        let waitTimeInbetween:Double = 1.5
+        let waitTimeInbetween:Double = Double(arc4random_uniform(3)+3)
         
         if (run) {
             var arrayOfActions:[SKAction] = []
@@ -271,9 +264,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createBoat() {
         
+        
+        var boatSize:Boat.BoatSizes = Boat.BoatSizes.big
+        switch arc4random_uniform(3) {
+        case 0:
+            boatSize = Boat.BoatSizes.small
+            break
+        case 1:
+            boatSize = Boat.BoatSizes.mid
+            break;
+        case 2:
+            boatSize = Boat.BoatSizes.big
+            break;
+        default:
+            boatSize = Boat.BoatSizes.small
+        }
         //Create Boat
-        //Add Physics to it
+        let node = Boat.init(withSize: boatSize, gameScene: self)
+        
+        //Add Physics
+        node.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
+        node.physicsBody!.affectedByGravity = false
+        node.physicsBody!.categoryBitMask = PhysicsCategories.Boat
+        node.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse | PhysicsCategories.Boat
+        node.physicsBody!.contactTestBitMask = PhysicsCategories.Light
+        
+        
+        
         //increment number of ships
+        numberOfShipsOnFrame += 1
     }
     
     
