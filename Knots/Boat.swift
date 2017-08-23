@@ -20,7 +20,7 @@ class Boat: SKSpriteNode {
     init(withSize: BoatSizes) {
         let boatTexture:SKTexture!
         let mySize:CGSize!
-
+        
         switch withSize {
         case .small:
             boatTexture = SKTexture (imageNamed: "smallBoat")
@@ -31,7 +31,7 @@ class Boat: SKSpriteNode {
         case .big:
             boatTexture = SKTexture (imageNamed: "bigBoat")
             mySize = CGSize (width: 20, height: 80)
-
+            
         }
         
         super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
@@ -41,27 +41,62 @@ class Boat: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 
+func setPosition(direction: Int, scene: SKScene) -> CGPoint {
+    
+    
+    let gameSpaceWidth:CGFloat = SKTexture(imageNamed: "rock").size().width //setting the size of the game space safe zone.
+    let gameSpaceHeight:CGFloat = SKTexture(imageNamed: "rock").size().height //setting the size of the game space safe zone.
+    
+    var width:CGFloat = scene.size.width
+    var height:CGFloat = scene.size.height
+    
+    var xValue:CGFloat = 0
+    var yValue:CGFloat = 0
+    
+    var randomBinary:CGFloat = 1
+    if arc4random_uniform(2) == 0 {
+        randomBinary = -1
+    }
+    
+    switch direction {
+    case 0: //TOP
+        yValue = CGFloat(height/2)
+        width -= gameSpaceWidth*2+self.size.width
+        xValue = randomBinary * CGFloat(arc4random_uniform(UInt32(width/2)))
+        break
+    case 1://RIGHT
+        xValue = CGFloat(width/2)
+        height -= gameSpaceHeight*2+self.size.width
+        yValue = randomBinary * CGFloat(arc4random_uniform(UInt32(height/2)))
+        break
+    case 2://LEFT
+        xValue = -CGFloat(width/2)
+        height -= gameSpaceHeight*2+self.size.width
+        yValue = randomBinary * CGFloat(arc4random_uniform(UInt32(height/2)))
+        break
+    case 3://BOTTOM
+        yValue = -CGFloat(height/2)
+        width -= gameSpaceWidth*2+self.size.width
+        xValue = randomBinary * CGFloat(arc4random_uniform(UInt32(width/2)))
+        break
+    default:
+        break
+    }
+    
+    return CGPoint(x: xValue, y: yValue)
 }
-//    
-//    init (gameScene:SKScene) {
-//        super.init(texture:SKTexture(imageNamed: "smallBoat"), color: SKColor.clear, size: CGSize(width: 20, height: 80))
-//        
-//        
-//        var image: String!
-//        
-//        if (size.height == 80) {
-//
-//            image = "smallBoat"
-//        } else if (size.height == 100) {
-//            
-//            image = "midBoat"
-//            
-//        } else { image = "bigBoat" }
-//        
-//}
-//
 
+func boatRotation() -> CGFloat {
+    let destPoint :CGPoint = CGPoint (x: 0, y: 0)
+    let vector1 = CGVector(dx: 0, dy: 1)
+    let vector2 = CGVector(dx: destPoint.x - self.position.x, dy: destPoint.y - self.position.y)
+    
+    return 0
+    
+    }
+}
 
 
 
