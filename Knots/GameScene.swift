@@ -14,15 +14,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let DegreesToRadians = CGFloat.pi / 180
     var light = SKSpriteNode()
     var lightHouse = SKSpriteNode()
-    
-    //Debug
-    var ship = SKSpriteNode()
+    var scoreLabel = SKLabelNode()
     
     //Tunable Variables
     let lightHouseRotationTimeTaken:Double = 1
     
-    //Containers
+    //Counters
     var numberOfShipsOnFrame:Int = 0
+    var currentScore:Int = 0
+    var nextRound:Int = 1
+    
     
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
@@ -55,6 +56,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody!.categoryBitMask = PhysicsCategories.Frame
         physicsBody!.collisionBitMask = PhysicsCategories.None
         physicsBody!.contactTestBitMask = PhysicsCategories.Boat
+        
+        //Setup Score Label
+        scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
+        scoreLabel.text = "Score: \(currentScore)"
+        scoreLabel.fontSize = 50
+        scoreLabel.fontColor = SKColor.white
+        scoreLabel.position = CGPoint(x: frame.midX, y: 4*frame.height/10)
+        
+        addChild(scoreLabel)
         
         //Start up spawn
         spawnController(run: true)
@@ -179,10 +189,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if body1.categoryBitMask == PhysicsCategories.Frame &&
             body2.categoryBitMask == PhysicsCategories.Boat {
             
-            //light hits boat
+            //Ship out of frame
             removeChildren(in: [body2.node!])
-            print("Boat out of frame")
+            
+            //update values
             numberOfShipsOnFrame -= 1
+            currentScore += 1
+            scoreLabel.text = "Score: \(currentScore)"
+            
         }
     }
     
@@ -229,10 +243,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      
      */
     
-    //DEBUG Logic
-    var currentScore:Int = 0
-    var round:Int = 1
-    
     //Called Each one a new round happens
     func spawnController (run: Bool) {
         
@@ -244,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for _ in 1...4 {
                 //Spawn the boat
                 //Spawn 4xround number of boats
-                for _ in 1...round {
+                for _ in 1...nextRound {
                     let spawn = SKAction.run {
                         self.createBoat()
                     }
@@ -314,12 +324,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
-        if (self.currentScore/10 == round) {
+        
+        if (self.currentScore/10 == nextRound) {
             removeAction(forKey: "BoatSpawn")
-            round += 1
+            nextRound += 1
             spawnController(run: true)
         }
-        
+       
     }
     
 }
