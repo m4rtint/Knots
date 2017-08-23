@@ -145,12 +145,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             body2.categoryBitMask == PhysicsCategories.Light {
             
             //if light hits boat
-            print("Light is hitting the boat")
             let node = body1.node as! Boat
-            node.removeAllActions()
-           
-            node.run(SKAction.move(to: node.boatOriginLocation, duration: node.boatSpeed))
- 
+            if (!node.isLit) {
+                print("Light is hitting the boat")
+                node.startTimerDown()
+                node.isLit = true
+            }
         }
         
         if body1.categoryBitMask == PhysicsCategories.Boat &&
@@ -180,7 +180,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             body2.categoryBitMask == PhysicsCategories.Light {
             
             //light hits boat
-            print("Light Left boat")
+            
+            let node = body1.node as! Boat
+            
+            if (node.isLit) {
+                print("Light Left boat")
+                node.startTimerRegen()
+                node.isLit = false
+            }
             
             
         }
@@ -196,7 +203,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             numberOfShipsOnFrame -= 1
             currentScore += 1
             scoreLabel.text = "Score: \(currentScore)"
-            
         }
     }
     
