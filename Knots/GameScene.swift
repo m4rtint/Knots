@@ -63,6 +63,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody!.contactTestBitMask = PhysicsCategories.Boat
         
         
+        //Start up spawn
+        spawnController(run: true)
     }
     
     //Set up Rocks on the corner of the screens
@@ -155,6 +157,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //light hits boat
             print("Light Left boat")
+            
             
         }
         
@@ -282,17 +285,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Create Boat
         let node = Boat.init(withSize: boatSize, gameScene: self)
         
+        //Add movement
+        node.run(SKAction.move(to: CGPoint(x:0,y:0), duration: 5), withKey: "movement")
+        
         //Add Physics
-        node.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody!.affectedByGravity = false
         node.physicsBody!.categoryBitMask = PhysicsCategories.Boat
         node.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse | PhysicsCategories.Boat
         node.physicsBody!.contactTestBitMask = PhysicsCategories.Light
         
-        
+        addChild(node)
         
         //increment number of ships
         numberOfShipsOnFrame += 1
+        
     }
     
     
