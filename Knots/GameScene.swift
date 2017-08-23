@@ -30,7 +30,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Boat : UInt32 = 0x1 << 2
         static let Light : UInt32 = 0x1 << 3
         static let LightHouse : UInt32 = 0x1 << 4
-        
     }
     
     
@@ -53,7 +52,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Setup Scene Physics
         physicsBody!.categoryBitMask = PhysicsCategories.Frame
         physicsBody!.contactTestBitMask = PhysicsCategories.Boat
-        
+        print(self.size.width)
+        print(self.size.height)
         
         //Start up spawn
         spawnController(run: true)
@@ -146,6 +146,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //When a boat hits the Lighthouse
             print ("Boat hit the light house - Game Over")
+        }
+        
+        if body1.categoryBitMask == PhysicsCategories.Frame &&
+            body2.categoryBitMask == PhysicsCategories.Boat {
+            
+            //When a boat hits the Lighthouse
+            print ("Boat is on the frame")
         }
     }
     
