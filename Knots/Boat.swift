@@ -23,6 +23,7 @@ class Boat: SKSpriteNode {
     var maxHealth:Float
     var boatSize:BoatSizes
     var boatOriginLoacion:CGPoint
+    var boatSpeed:Int
 
     init(withSize: BoatSizes, gameScene:SKScene) {
         let boatTexture:SKTexture!
@@ -41,17 +42,17 @@ class Boat: SKSpriteNode {
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
         mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
         boatOriginLoacion = CGPoint()
-        
-        
+
+        let temp:Int = randomNumber()
+        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 5, shortSideMod: 3)
         super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
-        self.position = setPosition(direction: (Int(arc4random_uniform(4))), scene: gameScene)
+        self.position = setPosition(direction: temp, scene: gameScene)
         self.zRotation = boatRotation()
-        self.zPosition = 1
         self.boatOriginLoacion = self.position
         healthBar.position = CGPoint(x: 30 , y: 0)
-        print( healthBar.position.x, healthBar.position.y)
-        print( self.position.x, self.position.y)
-        healthBar.zPosition = 3
+        
+        setZposition(boat: self, infoBar: healthBar)
+        
         self.addChild(healthBar)
     }
     
@@ -102,6 +103,7 @@ func setPosition(direction: Int, scene: SKScene) -> CGPoint {
         break
     }
     
+    
     return CGPoint(x: xValue, y: yValue)
 }
 
@@ -114,15 +116,41 @@ func boatRotation() -> CGFloat {
     
 }
     
-    func updateHealth(change: Float) {
+func updateHealth(change: Float) {
         if (currentHealth > 0) {
             currentHealth += change
         }
     }
     
-    func update() {
+func update() {
         healthBar.size.height = CGFloat(currentHealth);
     }
     
 }
 
+func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Int {
+    
+    var speed:Int = 1
+    
+    if (direction == 0 || direction == 3) {
+        
+        speed = Int(arc4random_uniform(3))+longSideMod
+    }
+    
+   else if (direction == 1 || direction == 2) {
+        
+        speed = Int(arc4random_uniform(3))+shortSideMod
+    }
+    return speed
+}
+
+func randomNumber() -> Int{
+    
+    return Int(arc4random_uniform(4))
+}
+
+func setZposition(boat: Boat, infoBar: SKSpriteNode) {
+    
+    boat.zPosition = 1
+    infoBar.zPosition = 3
+}
