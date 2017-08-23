@@ -11,33 +11,46 @@ import SpriteKit
 
 class Boat: SKSpriteNode {
     
+    //View stuff
+    var healthBar:SKSpriteNode!
     
-    enum BoatSizes {
-        case small, mid, big
+    enum BoatSizes:Int {
+        case small = 40, mid = 60, big = 80
     }
     
-    
+    //Model
+    var currentHealth: Float
+    var maxHealth:Float
+    var boatSize:BoatSizes
+
     init(withSize: BoatSizes, gameScene:SKScene) {
         let boatTexture:SKTexture!
         let mySize:CGSize!
-        
+        boatSize = withSize;
         switch withSize {
         case .small:
             boatTexture = SKTexture (imageNamed: "smallBoat")
-            mySize = CGSize (width: 20, height: 40)
         case .mid:
             boatTexture = SKTexture (imageNamed: "midBoat")
-            mySize = CGSize (width: 20, height: 60)
         case .big:
             boatTexture = SKTexture (imageNamed: "bigBoat")
-            mySize = CGSize (width: 20, height: 80)
-            
         }
+        maxHealth = Float(withSize.rawValue)
+        currentHealth = maxHealth
+        healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
+        mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
+        
         
         super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
-        
         self.position = setPosition(direction: (Int(arc4random_uniform(4))), scene: gameScene)
         self.zRotation = boatRotation()
+        self.zPosition = 1
+
+        healthBar.position = CGPoint(x: 30 , y: 0)
+        print( healthBar.position.x, healthBar.position.y)
+        print( self.position.x, self.position.y)
+        healthBar.zPosition = 3
+        self.addChild(healthBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,13 +107,20 @@ func boatRotation() -> CGFloat {
     let destPoint :CGPoint = CGPoint (x: 0, y: 0)
     let vector1 = CGVector(dx: 0, dy: 1)
     let vector2 = CGVector(dx: destPoint.x - self.position.x, dy: destPoint.y - self.position.y)
-    
-   let angle = atan2(vector2.dy, vector2.dx) - atan2(vector1.dy, vector1.dx)
-    
+    let angle = atan2(vector2.dy, vector2.dx) - atan2(vector1.dy, vector1.dx)
     return angle
     
-    }
 }
-
-
+    
+    func updateHealth(change: Float) {
+        if (currentHealth > 0) {
+            currentHealth += change
+        }
+    }
+    
+    func update() {
+        healthBar.size.height = CGFloat(currentHealth);
+    }
+    
+}
 
