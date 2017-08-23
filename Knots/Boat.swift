@@ -82,22 +82,22 @@ func setPosition(direction: Int, scene: SKScene) -> CGPoint {
     switch direction {
     case 0: //TOP
         yValue = CGFloat(height/2 + self.size.height)
-        width -= gameSpaceWidth*2+self.size.width+100
+        width -= gameSpaceWidth*2+self.size.height
         xValue = randomBinary * CGFloat(arc4random_uniform(UInt32(width/2)))
         break
     case 1://RIGHT
         xValue = CGFloat(width/2 + self.size.height)
-        height -= gameSpaceHeight*2+self.size.width+100
+        height -= gameSpaceHeight*2+self.size.height
         yValue = randomBinary * CGFloat(arc4random_uniform(UInt32(height/2)))
         break
     case 2://LEFT
         xValue = CGFloat(-width/2 - self.size.height)
-        height -= gameSpaceHeight*2+self.size.width+100
+        height -= gameSpaceHeight*2+self.size.height
         yValue = randomBinary * CGFloat(arc4random_uniform(UInt32(height/2)))
         break
     case 3://BOTTOM
         yValue = CGFloat(-height/2 - self.size.height)
-        width -= gameSpaceWidth*2+self.size.width+100
+        width -= gameSpaceWidth*2+self.size.height
         xValue = randomBinary * CGFloat(arc4random_uniform(UInt32(width/2)))
         break
     default:

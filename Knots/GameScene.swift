@@ -34,8 +34,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
-        //Setup Physics in this world
+        //Setup Physics in this world + remove gravity from the world
         self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVector.zero
         
         //Setup Corner rocks
         setupSceneCornerRocks()
@@ -50,10 +51,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupConeOfLightProperty()
         
         //Setup Scene Physics
+        physicsBody = SKPhysicsBody(rectangleOf: self.size)
         physicsBody!.categoryBitMask = PhysicsCategories.Frame
+        physicsBody!.collisionBitMask = PhysicsCategories.None
         physicsBody!.contactTestBitMask = PhysicsCategories.Boat
-        print(self.size.width)
-        print(self.size.height)
         
         //Start up spawn
         spawnController(run: true)
@@ -137,7 +138,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Light is hitting the boat")
             let node = body1.node as! Boat
             node.removeAllActions()
-            node.run(SKAction.move(to: node.boatOriginLocation, duration: 3))
+           
+            node.run(SKAction.move(to: node.boatOriginLocation, duration: node.boatSpeed))
  
         }
         
@@ -146,13 +148,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //When a boat hits the Lighthouse
             print ("Boat hit the light house - Game Over")
-        }
-        
-        if body1.categoryBitMask == PhysicsCategories.Frame &&
-            body2.categoryBitMask == PhysicsCategories.Boat {
-            
-            //When a boat hits the Lighthouse
-            print ("Boat is on the frame")
         }
     }
     
@@ -180,10 +175,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
+        //Handle any collisions between Nodes
         if body1.categoryBitMask == PhysicsCategories.Frame &&
             body2.categoryBitMask == PhysicsCategories.Boat {
-            removeChildren(in: [body2.node!])
             
+            //light hits boat
+            removeChildren(in: [body2.node!])
+            print("Boat out of frame")
             numberOfShipsOnFrame -= 1
         }
     }
@@ -321,6 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             round += 1
             spawnController(run: true)
         }
+        
     }
     
 }
