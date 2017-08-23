@@ -17,7 +17,7 @@ class Boat: SKSpriteNode {
     }
     
     
-    init(withSize: BoatSizes) {
+    init(withSize: BoatSizes, gameScene:SKScene) {
         let boatTexture:SKTexture!
         let mySize:CGSize!
         
@@ -36,6 +36,8 @@ class Boat: SKSpriteNode {
         
         super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
         
+        self.position = setPosition(direction: (Int(arc4random_uniform(4))), scene: gameScene)
+        self.zRotation = boatRotation()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -93,7 +95,9 @@ func boatRotation() -> CGFloat {
     let vector1 = CGVector(dx: 0, dy: 1)
     let vector2 = CGVector(dx: destPoint.x - self.position.x, dy: destPoint.y - self.position.y)
     
-    return 0
+   let angle = atan2(vector2.dy, vector2.dx) - atan2(vector1.dy, vector1.dx)
+    
+    return angle
     
     }
 }
