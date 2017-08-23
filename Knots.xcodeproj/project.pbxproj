@@ -15,6 +15,7 @@
 		5BE49A731F4B7B2000CCF704 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A711F4B7B2000CCF704 /* Main.storyboard */; };
 		5BE49A751F4B7B2000CCF704 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A741F4B7B2000CCF704 /* Assets.xcassets */; };
 		5BE49A781F4B7B2000CCF704 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A761F4B7B2000CCF704 /* LaunchScreen.storyboard */; };
+		5BE49A8C1F4D00EA00CCF704 /* Boat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE49A8B1F4D00EA00CCF704 /* Boat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		5BE49A741F4B7B2000CCF704 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BE49A771F4B7B2000CCF704 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BE49A791F4B7B2000CCF704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BE49A8B1F4D00EA00CCF704 /* Boat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				5BE49A6D1F4B7B2000CCF704 /* GameScene.swift */,
+				5BE49A8B1F4D00EA00CCF704 /* Boat.swift */,
 			);
 			name = GameScripts;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				5BE49A6E1F4B7B2000CCF704 /* GameScene.swift in Sources */,
 				5BE49A701F4B7B2000CCF704 /* GameViewController.swift in Sources */,
 				5BE49A681F4B7B2000CCF704 /* AppDelegate.swift in Sources */,
+				5BE49A8C1F4D00EA00CCF704 /* Boat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

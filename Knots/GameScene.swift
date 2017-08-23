@@ -21,11 +21,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Tunable Variables
     let lightHouseRotationTimeTaken:Double = 1
     
+    //Containers
+    var numberOfShipsOnFrame:Int = 0
+    
     struct PhysicsCategories {
-        static let None : UInt32 = 0   // 0
-        static let Boat : UInt32 = 0b1 //1
-        static let Light : UInt32 = 0b10 //2
-        static let LightHouse : UInt32 = 0b100 //4
+        static let None : UInt32 = 0x1 << 0
+        static let Frame :UInt32 = 0x1 << 1
+        static let Boat : UInt32 = 0x1 << 2
+        static let Light : UInt32 = 0x1 << 3
+        static let LightHouse : UInt32 = 0x1 << 4
+        
     }
     
     
@@ -53,14 +58,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.light.physicsBody!.collisionBitMask = PhysicsCategories.None
         self.light.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
         
+        //Setup Scene Physics
+        physicsBody!.categoryBitMask = PhysicsCategories.Frame
+        physicsBody!.contactTestBitMask = PhysicsCategories.Boat
+        
         
         //DEBUG=============
-//        self.ship = self.childNode(withName:"ship") as! SKSpriteNode
-//        self.ship.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
-//        self.ship.physicsBody!.affectedByGravity = false
-//        self.ship.physicsBody!.categoryBitMask = PhysicsCategories.Boat
-//        self.ship.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse
-//        self.ship.physicsBody!.contactTestBitMask = PhysicsCategories.Light
+        //        self.ship = self.childNode(withName:"ship") as! SKSpriteNode
+        //        self.ship.physicsBody = SKPhysicsBody(rectangleOf: ship.size)
+        //        self.ship.physicsBody!.affectedByGravity = false
+        //        self.ship.physicsBody!.categoryBitMask = PhysicsCategories.Boat
+        //        self.ship.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse
+        //        self.ship.physicsBody!.contactTestBitMask = PhysicsCategories.Light
     }
     
     //Set up Rocks on the corner of the screens
@@ -70,7 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Top Left
         var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/2)
         var yCoordinate:CGFloat = (self.size.height/2)-(rock.size().height/2)
-            
+        
         var node = SKSpriteNode(texture: rock)
         node.position = CGPoint(x: xCoordinate, y:yCoordinate)
         addChild(node)
@@ -102,12 +111,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     /*
- 
- 
-        Handling All Collision
- 
- 
-    */
+     
+     
+     Handling All Collision
+     
+     
+     */
     
     //Called when 2 physics bodies (Nodes) make contact
     func didBegin(_ contact: SKPhysicsContact) {
@@ -153,25 +162,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //light hits boat
             print("Light Left boat")
+            
         }
         
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.LightHouse {
             
             //When a boat hits the Lighthouse
-            print ("Boat hit the light house")
+            print ("Boat hit the light house - Game Over")
+        }
+        
+        
+        if body1.categoryBitMask == PhysicsCategories.Frame &&
+            body2.categoryBitMask == PhysicsCategories.Boat {
+            removeChildren(in: [body2.node!])
+            numberOfShipsOnFrame -= 1
         }
     }
-
+    
     
     
     /*
- 
- 
+     
+     
      Handling Light + Light house control
- 
- 
-    */
+     
+     
+     */
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
@@ -195,11 +212,79 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let rotate = SKAction.rotate(toAngle: angle, duration:lightHouseRotationTimeTaken, shortestUnitArc: true)
         self.light.run(rotate)
-        
-        print("hello")
     }
-
-}
     
+    
+    /*
+     
+     
+     Spawn Mechanics
+     
+     
+     */
+    
+    //DEBUG Logic
+    var currentScore:Int = 0
+    var round:Int = 1
+    
+    //Called Each one a new round happens
+    func spawnController (run: Bool) {
+        
+        let waitTimeInbetween:Double = 1.5
+        
+        if (run) {
+            var arrayOfActions:[SKAction] = []
+            
+            for _ in 1...4 {
+                //Spawn the boat
+                //Spawn 4xround number of boats
+                for _ in 1...round {
+                    let spawn = SKAction.run {
+                        self.createBoat()
+                    }
+                    arrayOfActions.append(spawn)
+                    
+                    if (arc4random_uniform(2) == 0) {
+                        //Wait time between all boats
+                        let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
+                        arrayOfActions.append(waitToSpawn)
+                    }
+                }
+                
+                //Whether or not there's wait time between spawning more boats
+                if (arc4random_uniform(2) == 0) {
+                    //Wait time between all boats
+                    let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
+                    arrayOfActions.append(waitToSpawn)
+                }
+            }
+            
+            
+            let spawnSequence = SKAction.sequence(arrayOfActions)
+            let spawnForever = SKAction.repeatForever(spawnSequence)
+            self.run(spawnForever, withKey:"BoatSpawn")
+            
+        } else {
+            removeAction(forKey: "BoatSpawn")
+        }
+    }
+    
+    func createBoat() {
+        
+        //Create Boat
+        //Add Physics to it
+        //increment number of ships
+    }
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+        if (self.currentScore/10 == round) {
+            removeAction(forKey: "BoatSpawn")
+            round += 1
+            spawnController(run: true)
+        }
+    }
+    
+}
 
 
