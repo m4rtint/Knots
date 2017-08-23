@@ -23,7 +23,7 @@ class Boat: SKSpriteNode {
     var maxHealth:Float
     var boatSize:BoatSizes
     var boatOriginLoacion:CGPoint
-    var boatSpeed:Int
+    var boatSpeed:Double
 
     init(withSize: BoatSizes, gameScene:SKScene) {
         let boatTexture:SKTexture!
@@ -128,7 +128,7 @@ func update() {
     
 }
 
-func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Int {
+func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Double {
     
     var speed:Int = 1
     
@@ -141,7 +141,7 @@ func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Int {
         
         speed = Int(arc4random_uniform(3))+shortSideMod
     }
-    return speed
+    return Double(speed)
 }
 
 func randomNumber() -> Int{
