@@ -27,7 +27,7 @@ class Boat: SKSpriteNode {
     var countDownText = SKLabelNode(text: "5")
     var countDown:Int = 5
     var isSaved:Bool = false
-    
+    var isLit:Bool = false
     
     
     
@@ -56,7 +56,8 @@ class Boat: SKSpriteNode {
         super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
         
         let temp:Int = randomNumber()
-        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 2, shortSideMod: 5)
+        
+        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 10, shortSideMod: 15)
         
         
         
@@ -141,16 +142,16 @@ class Boat: SKSpriteNode {
         
     }
     
-    func updateHealth(change: Int) {
-        if (currentHealth > 0) {
-            currentHealth += change
-        }
-    }
-    
-    func update() {
-        healthBar.size.height = CGFloat(currentHealth);
-    }
-    
+//    func updateHealth(change: Int) {
+//        if (currentHealth > 0) {
+//            currentHealth += change
+//        }
+//    }
+//    
+//    func update() {
+//        healthBar.size.height = CGFloat(currentHealth);
+//    }
+//    
     
     //TODO NEED TO SET SAVED/NOT SAVED BOOLEAN
     
@@ -196,15 +197,14 @@ class Boat: SKSpriteNode {
         
         if self.isSaved == false {
             if countDown > 0 {
-                countDown -= 1
+                countDown -= 10
                 countDownText.text = String(countDown)
             } else {
-                
-                countDown = currentHealth
                 countDownText.text = String(countDown)
                 countDownText.isHidden = true
                 self.isSaved = true
                 print(isSaved)
+                self.boatTurnedAround()
                 
             }
         }
@@ -227,11 +227,25 @@ class Boat: SKSpriteNode {
             } else {
                 
                 countDownText.text = String(countDown)
-                countDownText.isHidden = true
+              //  countDownText.isHidden = true
                 
                 
             }
         }
+        
+    }
+    
+    func boatTurnedAround () {
+        
+        self.removeAllActions()
+        let destPoint :CGPoint = self.boatOriginLocation
+        let vector1 = CGVector(dx: 0, dy: 1)
+        let vector2 = CGVector(dx: destPoint.x - self.position.x, dy: destPoint.y - self.position.y)
+        let angle = atan2(vector2.dy, vector2.dx) - atan2(vector1.dy, vector1.dx)
+        self.zRotation = angle
+        self.run(SKAction.move(to: self.boatOriginLocation, duration: self.boatSpeed))
+        
+ 
         
     }
 }
