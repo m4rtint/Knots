@@ -39,24 +39,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
         //Setup Corner rocks
-        setupSceneObjects()
+        setupSceneCornerRocks()
         
         //Setup Lighthouse Collision
         self.lightHouse = self.childNode(withName:"LightHouse") as! SKSpriteNode
-        self.lightHouse.physicsBody = SKPhysicsBody(rectangleOf: lightHouse.size)
-        self.lightHouse.physicsBody!.affectedByGravity = false
         self.lightHouse.physicsBody!.categoryBitMask = PhysicsCategories.LightHouse
         self.lightHouse.physicsBody!.collisionBitMask = PhysicsCategories.Boat
         self.lightHouse.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
         
-        
-        //Set up cone of light Collision
-        self.light = self.childNode(withName: "ConeOfLight") as! SKSpriteNode
-        self.light.physicsBody = SKPhysicsBody(rectangleOf: light.size)
-        self.light.physicsBody!.affectedByGravity = false
-        self.light.physicsBody!.categoryBitMask = PhysicsCategories.Light
-        self.light.physicsBody!.collisionBitMask = PhysicsCategories.None
-        self.light.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
+        //Setup cone of light
+        setupConeOfLightProperty()
         
         //Setup Scene Physics
         physicsBody!.categoryBitMask = PhysicsCategories.Frame
@@ -67,8 +59,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnController(run: true)
     }
     
+    func setupConeOfLightProperty() {
+        //Set up cone of light Collision
+        self.light = self.lightHouse.childNode(withName: "ConeOfLight") as! SKSpriteNode
+        self.light.physicsBody!.categoryBitMask = PhysicsCategories.Light
+        self.light.physicsBody!.collisionBitMask = PhysicsCategories.None
+        self.light.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
+        
+    }
+    
     //Set up Rocks on the corner of the screens
-    func setupSceneObjects() {
+    func setupSceneCornerRocks() {
         //TODO SET UP THE ROCK SIZES
         //Set the x+y coordinate
         //Top Left
@@ -134,6 +135,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //if light hits boat
             print("Light is hitting the boat")
+            let node = body1.node as! Boat
+            node.removeAllActions()
+            node.run(SKAction.move(to: node.boatOriginLocation, duration: 3))
+ 
+        }
+        
+        if body1.categoryBitMask == PhysicsCategories.Boat &&
+            body2.categoryBitMask == PhysicsCategories.LightHouse {
+            
+            //When a boat hits the Lighthouse
+            print ("Boat hit the light house - Game Over")
         }
     }
     
@@ -161,17 +173,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        if body1.categoryBitMask == PhysicsCategories.Boat &&
-            body2.categoryBitMask == PhysicsCategories.LightHouse {
-            
-            //When a boat hits the Lighthouse
-            print ("Boat hit the light house - Game Over")
-        }
-        
-        
         if body1.categoryBitMask == PhysicsCategories.Frame &&
             body2.categoryBitMask == PhysicsCategories.Boat {
             removeChildren(in: [body2.node!])
+            
             numberOfShipsOnFrame -= 1
         }
     }
@@ -201,13 +206,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func rotateLight (currentPoint:CGPoint ) {
-        let deltaX = self.light.position.x - currentPoint.x
-        let deltaY = self.light.position.y - currentPoint.y
+        let deltaX = -currentPoint.x
+        let deltaY = -currentPoint.y
         
         let angle = atan2(deltaY,deltaX) + 270 * DegreesToRadians
         
         let rotate = SKAction.rotate(toAngle: angle, duration:lightHouseRotationTimeTaken, shortestUnitArc: true)
-        self.light.run(rotate)
+        self.lightHouse.run(rotate)
     }
     
     
@@ -293,7 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody!.affectedByGravity = false
         node.physicsBody!.categoryBitMask = PhysicsCategories.Boat
         node.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse | PhysicsCategories.Boat
-        node.physicsBody!.contactTestBitMask = PhysicsCategories.Light
+        node.physicsBody!.contactTestBitMask = PhysicsCategories.Light | PhysicsCategories.Frame
         
         addChild(node)
         
