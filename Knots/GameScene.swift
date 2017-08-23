@@ -298,7 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let node = Boat.init(withSize: boatSize, gameScene: self)
         
         //Add movement
-        node.run(SKAction.move(to: CGPoint(x:0,y:0), duration: 5), withKey: "movement")
+        node.run(SKAction.move(to: CGPoint(x:0,y:0), duration: node.boatSpeed), withKey: "movement")
         
         //Add Physics
         node.physicsBody = SKPhysicsBody(rectangleOf: node.size)

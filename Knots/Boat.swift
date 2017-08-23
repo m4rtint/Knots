@@ -157,3 +157,5 @@ func setZposition(boat: Boat, infoBar: SKSpriteNode) {
     boat.zPosition = 1
     infoBar.zPosition = 3
 }
+
+
