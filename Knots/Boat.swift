@@ -42,18 +42,18 @@ class Boat: SKSpriteNode {
         currentHealth = maxHealth
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
         mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
-       boatOriginLocation = CGPoint()
+
+        boatOriginLocation = CGPoint()
 
         let temp:Int = randomNumber()
         boatSpeed = setBoatSpeed(direction: temp, longSideMod: 5, shortSideMod: 3)
-       super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
+        super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
         self.position = setPosition(direction: temp, scene: gameScene)
         self.zRotation = boatRotation()
         self.boatOriginLocation = self.position
-       healthBar.position = CGPoint(x: 30 , y: 0)
-        
+        healthBar.position = CGPoint(x: 30 , y: 0)
+
         setZposition(boat: self, infoBar: healthBar)
-        
         self.addChild(healthBar)
     }
     
@@ -129,6 +129,7 @@ func update() {
     
     
     //TODO NEED TO SET SAVED/NOT SAVED BOOLEAN
+
 }
 
 func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Double {
@@ -145,6 +146,7 @@ func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Double
         speed = Int(arc4random_uniform(3))+shortSideMod
     }
     return Double(speed)
+
 }
 
 func randomNumber() -> Int{
