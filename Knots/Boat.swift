@@ -22,6 +22,7 @@ class Boat: SKSpriteNode {
     var currentHealth: Float
     var maxHealth:Float
     var boatSize:BoatSizes
+    var boatOriginLoacion:CGPoint
 
     init(withSize: BoatSizes, gameScene:SKScene) {
         let boatTexture:SKTexture!
@@ -39,13 +40,14 @@ class Boat: SKSpriteNode {
         currentHealth = maxHealth
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
         mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
+        boatOriginLoacion = CGPoint()
         
         
         super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
         self.position = setPosition(direction: (Int(arc4random_uniform(4))), scene: gameScene)
         self.zRotation = boatRotation()
         self.zPosition = 1
-
+        self.boatOriginLoacion = self.position
         healthBar.position = CGPoint(x: 30 , y: 0)
         print( healthBar.position.x, healthBar.position.y)
         print( self.position.x, self.position.y)
