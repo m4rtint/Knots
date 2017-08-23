@@ -22,8 +22,9 @@ class Boat: SKSpriteNode {
     var currentHealth: Float
     var maxHealth:Float
     var boatSize:BoatSizes
-    var boatOriginLoacion:CGPoint
+    var boatOriginLocation:CGPoint
     var boatSpeed:Double
+
 
     init(withSize: BoatSizes, gameScene:SKScene) {
         let boatTexture:SKTexture!
@@ -41,15 +42,15 @@ class Boat: SKSpriteNode {
         currentHealth = maxHealth
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
         mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
-        boatOriginLoacion = CGPoint()
+       boatOriginLocation = CGPoint()
 
         let temp:Int = randomNumber()
         boatSpeed = setBoatSpeed(direction: temp, longSideMod: 5, shortSideMod: 3)
-        super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
+       super.init(texture: boatTexture, color: UIColor.clear, size: mySize)
         self.position = setPosition(direction: temp, scene: gameScene)
         self.zRotation = boatRotation()
-        self.boatOriginLoacion = self.position
-        healthBar.position = CGPoint(x: 30 , y: 0)
+        self.boatOriginLocation = self.position
+       healthBar.position = CGPoint(x: 30 , y: 0)
         
         setZposition(boat: self, infoBar: healthBar)
         
@@ -80,22 +81,22 @@ func setPosition(direction: Int, scene: SKScene) -> CGPoint {
     
     switch direction {
     case 0: //TOP
-        yValue = CGFloat(height/2)
+        yValue = CGFloat(height/2 + self.size.height)
         width -= gameSpaceWidth*2+self.size.width
         xValue = randomBinary * CGFloat(arc4random_uniform(UInt32(width/2)))
         break
     case 1://RIGHT
-        xValue = CGFloat(width/2)
+        xValue = CGFloat(width/2 + self.size.height)
         height -= gameSpaceHeight*2+self.size.width
         yValue = randomBinary * CGFloat(arc4random_uniform(UInt32(height/2)))
         break
     case 2://LEFT
-        xValue = -CGFloat(width/2)
+        xValue = CGFloat(-width/2 - self.size.height)
         height -= gameSpaceHeight*2+self.size.width
         yValue = randomBinary * CGFloat(arc4random_uniform(UInt32(height/2)))
         break
     case 3://BOTTOM
-        yValue = -CGFloat(height/2)
+        yValue = CGFloat(-height/2 - self.size.height)
         width -= gameSpaceWidth*2+self.size.width
         xValue = randomBinary * CGFloat(arc4random_uniform(UInt32(width/2)))
         break
