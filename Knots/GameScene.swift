@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let highScore = 10
     let userDefaults = UserDefaults.standard
     //Tunable Variables
-    let lightHouseRotationTimeTaken:Double = 1
+    let lightHouseRotationTimeTaken:Double = 0.5
     
     //Counters
     var numberOfShipsOnFrame:Int = 0
