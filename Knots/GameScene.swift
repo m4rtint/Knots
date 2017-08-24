@@ -15,7 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var light = SKSpriteNode()
     var lightHouse = SKSpriteNode()
     var scoreLabel = SKLabelNode()
-    
+    let highScore = 10
+    let userDefaults = UserDefaults.standard
     //Tunable Variables
     let lightHouseRotationTimeTaken:Double = 1
     
@@ -337,6 +338,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spawnController(run: true)
         }
        
+    }
+    
+    func highScoreCheck (currentHighScore: Int) {
+        
+        if let highScore = userDefaults.value(forKey: "highScore") {
+            
+            if currentHighScore > highScore as! Int {
+                userDefaults.set(currentHighScore, forKey: "highScore")
+            }
+            
+        }
     }
     
 }
