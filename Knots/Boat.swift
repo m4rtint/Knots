@@ -14,7 +14,7 @@ class Boat: SKSpriteNode {
     //View stuff
     var healthBar:SKSpriteNode!
     enum BoatSizes:Int {
-        case small = 40, mid = 60, big = 80
+        case small = 2, mid = 4, big = 6
     }
     
     //Model
@@ -49,11 +49,11 @@ class Boat: SKSpriteNode {
             boatTexture = SKTexture (imageNamed: "bigBoat")
         }
         
-        maxHealth = Float(withSize.rawValue)/40
+        maxHealth = Float(withSize.rawValue)
         currentHealth = maxHealth
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
         
-        mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
+        mySize = CGSize (width: 12, height: CGFloat(withSize.rawValue)*9)
         
         boatOriginLocation = CGPoint()
         
@@ -62,7 +62,7 @@ class Boat: SKSpriteNode {
         
         let temp:Int = randomNumber()
         
-        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 10, shortSideMod: 15)
+        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 18, shortSideMod: 20)
         
         
         
@@ -72,7 +72,7 @@ class Boat: SKSpriteNode {
        // healthBar.position = CGPoint(x: 30 , y: 0)
         
         countDownText = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
-        countDownText.position = CGPoint(x: 30 , y: -20)
+        countDownText.position = CGPoint(x: 0 , y: -50)
         countDownText.fontColor = SKColor.black
         
         countDown = maxHealth
@@ -192,9 +192,7 @@ class Boat: SKSpriteNode {
     
     func startTimerDown() {
         timer.invalidate()
-        if (self.scene?.isPaused)! {
-            return
-        }
+ 
         timer = Timer.scheduledTimer(timeInterval: 0.1,
                                      target: self,
                                      selector:#selector (self.updateTimerDown),
@@ -208,7 +206,7 @@ class Boat: SKSpriteNode {
         if !self.isSaved {
             if countDown > 0 {
                 //When counting Down
-                countDown -= 0.1
+                countDown -= 0.5
                 
                 //Show the text
                 countDownText.run(SKAction.fadeIn(withDuration: 0.5))
@@ -227,9 +225,7 @@ class Boat: SKSpriteNode {
     
     func startTimerRegen() {
         timer.invalidate()
-//        if (false)! {
-//            return
-//        }
+
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:#selector (self.updateTimerRegen), userInfo: nil, repeats: true)
     }
     
