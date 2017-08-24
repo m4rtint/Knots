@@ -24,7 +24,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentScore:Int = 0
     var nextRound:Int = 1
     
-    
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
         static let Frame :UInt32 = 0x1 << 1
@@ -76,7 +75,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.light.physicsBody!.categoryBitMask = PhysicsCategories.Light
         self.light.physicsBody!.collisionBitMask = PhysicsCategories.None
         self.light.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
-        
     }
     
     //Set up Rocks on the corner of the screens
@@ -158,6 +156,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //When a boat hits the Lighthouse
             print ("Boat hit the light house - Game Over")
+            self.scene?.isPaused = true
         }
     }
     
