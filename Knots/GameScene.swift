@@ -20,12 +20,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Tunable Variables
     let lightHouseRotationTimeTaken:Double = 0.5
+    var powerUp:Bool = false
     
     //Counters
     var nextRound:Int = 1
         //Scores
     var highScore:Int = 0
     var currentScore:Int = 0
+    var powerUpScore:Int = 0
     
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
@@ -210,8 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 node.startTimerRegen()
                 node.isLit = false
             }
-            
-            
         }
         
         //Boats vs Frame
@@ -242,6 +242,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //updates the score and high score
     public func updateScoreBoatSaved() {
         self.currentScore += 1
+        
+        //Only add to power Up score if player doesn't have power up
+        if (!self.powerUp) {
+            self.powerUpScore += 1
+        }
         if self.currentScore > self.highScore {
             self.highScore = self.currentScore
         }
@@ -318,6 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.text = scoreOnLabel()
         self.isPaused = false
         spawnController()
+        self.powerUpScore = 0
     }
     
     
@@ -355,6 +361,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 object.removeFromParent()
                 restartGame()
             }
+            //Should be able to check only the parent without the child
+            if (curPoint.x < self.lightHouse.size.width/2 &&
+                curPoint.x > -self.lightHouse.size.width/2 &&
+                curPoint.y < self.lightHouse.size.height/2 &&
+                curPoint.y > -self.lightHouse.size.height/2) {
+                pressedPowerUp()
+                
+            }
         }
         if (!self.isPaused){
             rotateLight(currentPoint: curPoint)
@@ -369,6 +383,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let rotate = SKAction.rotate(toAngle: angle, duration:lightHouseRotationTimeTaken, shortestUnitArc: true)
         self.lightHouse.run(rotate)
+        
+        if let powerUpNode = self.childNode(withName: "FlashingLight") {
+            powerUpNode.run(rotate)
+        }
     }
     
     
@@ -408,12 +426,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 arrayOfActions.append(waitToSpawn)
             }
         }
-            
-            
             let spawnSequence = SKAction.sequence(arrayOfActions)
             let spawnForever = SKAction.repeatForever(spawnSequence)
             self.run(spawnForever, withKey:"BoatSpawn")
     }
+    /*
+ 
+ 
+     Power up
+ 
+ 
+    */
+    
+    func screenFlashFromPowerUp() {
+        //Flash
+        let node = SKSpriteNode()
+        node.color = UIColor.white
+        node.size = frame.size
+        node.zPosition = 2000
+        node.position = CGPoint(x:0, y:0)
+        addChild(node)
+        
+        
+        let transition = SKAction.fadeOut(withDuration: 1)
+        let fadeOut = SKAction.run {
+            node.removeFromParent()
+        }
+        
+        
+        node.run(SKAction.sequence([transition,fadeOut]))
+        
+        //remove Flashing Node
+        self.childNode(withName: "FlashingLight")?.removeFromParent()
+    }
+   
+    
+    
+    func pressedPowerUp() {
+        
+        if (self.powerUp) {
+            for object in self.children {
+                if let boat = object as? Boat {
+                    boat.saveBoat(powerUp: true)
+                }
+            }
+            self.powerUp = false
+            screenFlashFromPowerUp()
+            self.powerUpScore = 0
+        }
+    }
+    
+    
+    
+    /*
+ 
+ 
+     Creating a new boat
+ 
+ 
+    */
     
     func createBoat() {
         var boatSize:Boat.BoatSizes = Boat.BoatSizes.big
@@ -455,6 +526,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             nextRound += 1
             spawnController()
         }
+        
+        if (self.powerUpScore >= 5) {
+
+            let node = SKSpriteNode()
+            node.position = self.lightHouse.position
+            node.size = self.lightHouse.size
+            node.zPosition = 3000
+            node.color = UIColor.yellow
+            node.name = "FlashingLight"
+            addChild(node)
+            
+            let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 1)
+            let fadeIn = SKAction.fadeAlpha(to: 1, duration: 1)
+            let fadeSequence = SKAction.sequence([fadeOut,fadeIn])
+            node.run(SKAction.repeatForever(fadeSequence))
+            
+            self.powerUpScore = 0
+            self.powerUp = true
+
+        }
+        
        
     }
     

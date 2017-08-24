@@ -189,20 +189,28 @@ class Boat: SKSpriteNode {
                 //Show the text
                 countDownText.run(SKAction.fadeIn(withDuration: 0.5))
             } else {
-                //When boat is saved
-                self.alpha = 0.5
-                
-                //Hide the text
-                countDownText.run(SKAction.fadeOut(withDuration: 0.5))
-                self.isSaved = true
-                self.boatTurnedAround()
-                let scene = self.scene as? GameScene
-                scene?.updateScoreBoatSaved()
-                
-                self.physicsBody = nil
+                saveBoat(powerUp: false)
             }
         }
         countDownText.text = String(format: "%.2f",abs(countDown))
+    }
+    
+    //Set the properties as saved boat
+    func saveBoat(powerUp: Bool) {
+        //When boat is saved
+        self.alpha = 0.5
+        
+        //Hide the text
+        countDownText.run(SKAction.fadeOut(withDuration: 0.5))
+        self.isSaved = true
+        self.boatTurnedAround()
+        if (!powerUp) {
+            let scene = self.scene as? GameScene
+            scene?.updateScoreBoatSaved()
+        }
+        
+        self.physicsBody = nil
+        
     }
     
     func startTimerRegen() {
