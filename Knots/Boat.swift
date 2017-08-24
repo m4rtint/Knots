@@ -200,8 +200,6 @@ class Boat: SKSpriteNode {
                 scene?.updateScoreBoatSaved()
                 
                 self.physicsBody = nil
-                
-                
             }
         }
         countDownText.text = String(format: "%.2f",abs(countDown))
