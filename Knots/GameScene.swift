@@ -332,6 +332,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnController()
         self.powerUpScore = 0
         self.powerUp = false
+        self.childNode(withName: "FlashingLight")?.removeFromParent()
     }
     
     
