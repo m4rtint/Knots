@@ -196,6 +196,12 @@ class Boat: SKSpriteNode {
                 countDownText.run(SKAction.fadeOut(withDuration: 0.5))
                 self.isSaved = true
                 self.boatTurnedAround()
+                let scene = self.scene as? GameScene
+                scene?.updateScoreBoatSaved()
+                
+                self.physicsBody = nil
+                
+                
             }
         }
         countDownText.text = String(format: "%.2f",abs(countDown))

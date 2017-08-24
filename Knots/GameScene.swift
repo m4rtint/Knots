@@ -15,15 +15,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var light = SKSpriteNode()
     var lightHouse = SKSpriteNode()
     var scoreLabel = SKLabelNode()
-    let highScore = 10
     let userDefaults = UserDefaults.standard
+    
+    
     //Tunable Variables
     let lightHouseRotationTimeTaken:Double = 0.5
     
     //Counters
-    var numberOfShipsOnFrame:Int = 0
-    var currentScore:Int = 0
     var nextRound:Int = 1
+        //Scores
+    var highScore:Int = 0
+    var currentScore:Int = 0
     
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
@@ -57,19 +59,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody!.collisionBitMask = PhysicsCategories.None
         physicsBody!.contactTestBitMask = PhysicsCategories.Boat
         
+        //Setup High score
+        if userDefaults.value(forKey: "highScore") != nil{
+            highScore = userDefaults.value(forKey: "highScore") as! Int
+        } else {
+            userDefaults.set(0, forKey: "highScore")
+            highScore = 0
+        }
+        
         //Setup Score Label
         scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
-        scoreLabel.text = "Score: \(currentScore)"
-        scoreLabel.fontSize = 50
+        scoreLabel.text = scoreOnLabel()
+        scoreLabel.fontSize = 25
         scoreLabel.fontColor = SKColor.white
-        scoreLabel.position = CGPoint(x: frame.midX, y: 4*frame.height/10)
+        scoreLabel.position = CGPoint(x: frame.midX, y: 3*frame.height/10)
         
         addChild(scoreLabel)
         
         //Start up spawn
         spawnController()
     }
-
+    
     func setupConeOfLightProperty() {
         //Set up cone of light Collision
         self.light = self.lightHouse.childNode(withName: "ConeOfLight") as! SKSpriteNode
@@ -139,24 +149,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             body2 = contact.bodyA
         }
         
-        //Handle any collisions between Nodes
+        //Boat Vs Light
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.Light {
             
             //if light hits boat
             let node = body1.node as! Boat
             if (!node.isLit) {
-                print("Light is hitting the boat")
                 node.startTimerDown()
                 node.isLit = true
             }
         }
         
+        //Boat VS LightHouse
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.LightHouse {
             
             //When a boat hits the Lighthouse
-            print ("Boat hit the light house - Game Over")
+            userDefHighScoreUpdate ()
             self.pauseGame(paused: false)
             
         }
@@ -177,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             body2 = contact.bodyA
         }
         
-        //Handle any collisions between Nodes
+        //Boat VS light
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.Light {
             
@@ -194,18 +204,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        //Handle any collisions between Nodes
+        //Boats vs Frame
         if body1.categoryBitMask == PhysicsCategories.Frame &&
             body2.categoryBitMask == PhysicsCategories.Boat {
             
             //Ship out of frame
             removeChildren(in: [body2.node!])
-            
-            //update values
-            numberOfShipsOnFrame -= 1
-            currentScore += 1
-            scoreLabel.text = "Score: \(currentScore)"
         }
+    }
+    
+    /*
+     
+     Score Manager
+     
+     */
+    
+    //Update user Default highscore
+    func userDefHighScoreUpdate () {
+        //Check if High score is the higher than what's stored in userDefaults
+        if let currentHighScore = userDefaults.value(forKey: "highScore") as? Int {
+            if self.highScore > currentHighScore {
+                userDefaults.set(self.highScore, forKey: "highScore")
+            }
+        }
+    }
+    
+    //updates the score and high score
+    public func updateScoreBoatSaved() {
+        self.currentScore += 1
+        if self.currentScore > self.highScore {
+            self.highScore = self.currentScore
+        }
+        scoreLabel.text = scoreOnLabel()
+    }
+    
+    func scoreOnLabel() ->String {
+        return "Score: \(currentScore)    HighScore: \(highScore)"
     }
     
     /*
@@ -271,7 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.removeAllActions()
         self.currentScore = 0
         self.nextRound = 1
-        scoreLabel.text = "Score: \(currentScore)"
+        scoreLabel.text = scoreOnLabel()
         self.isPaused = false
         spawnController()
     }
@@ -400,9 +434,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody!.contactTestBitMask = PhysicsCategories.Light | PhysicsCategories.Frame
         
         addChild(node)
-        
-        //increment number of ships
-        numberOfShipsOnFrame += 1
+    
     }
     
     
@@ -416,16 +448,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
     }
     
-    func highScoreCheck (currentHighScore: Int) {
-        
-        if let highScore = userDefaults.value(forKey: "highScore") {
-            
-            if currentHighScore > highScore as! Int {
-                userDefaults.set(currentHighScore, forKey: "highScore")
-            }
-            
-        }
-    }
+   
     
 }
 
