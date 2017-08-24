@@ -167,7 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //if light hits boat
             let node = body1.node as! Boat
-            if (!node.isLit) {
+            if (!node.isLit && node.intersects(self.light)) {
                 node.startTimerDown()
                 node.isLit = true
             }
@@ -324,6 +324,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.isPaused = false
         spawnController()
         self.powerUpScore = 0
+        self.powerUp = false
     }
     
     
@@ -535,6 +536,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.zPosition = 3000
             node.color = UIColor.yellow
             node.name = "FlashingLight"
+            node.zRotation = self.lightHouse.zRotation
             addChild(node)
             
             let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 1)
