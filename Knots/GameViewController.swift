@@ -17,17 +17,17 @@ class GameViewController: UIViewController {
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
-        if let scene = GKScene(fileNamed: "GameScene") {
-            
+        if let scene = SKScene(fileNamed: "MenuScene") {
+        
             // Get the SKScene from the loaded GKScene
-            if let sceneNode = scene.rootNode as! GameScene? {
+            //if let sceneNode = scene.rootNode as! SKScene? {
                 
                 // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFill
+                scene.scaleMode = .aspectFill
                 
                 // Present the scene
                 if let view = self.view as! SKView? {
-                    view.presentScene(sceneNode)
+                    view.presentScene(scene)
                     
                     view.ignoresSiblingOrder = true
                     
@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
                     view.showsNodeCount = true
                     view.showsPhysics = true
                 }
-            }
+           // }
         }
     }
 
