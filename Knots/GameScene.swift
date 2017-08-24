@@ -157,10 +157,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //When a boat hits the Lighthouse
             print ("Boat hit the light house - Game Over")
-            self.scene?.isPaused = true
+            self.pauseGame()
+            
         }
     }
     
+    func pauseGame() {
+        self.scene?.isPaused = true
+        for object in self.children {
+            if let boat = object as? Boat {
+                boat.timer.invalidate()
+            }
+        }
+    }
+
     func didEnd(_ contact: SKPhysicsContact) {
         //Setup and assign bodies
         //Body 1 will always be the lower physics category
@@ -292,8 +302,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createBoat() {
-        
-        
         var boatSize:Boat.BoatSizes = Boat.BoatSizes.big
         switch arc4random_uniform(3) {
         case 0:
