@@ -181,7 +181,6 @@ class Boat: SKSpriteNode {
     }
     
     func updateTimerDown () {
-        print("Timer goes Down")
         if !self.isSaved {
             if countDown > 0 {
                 //When counting Down
@@ -208,7 +207,6 @@ class Boat: SKSpriteNode {
     }
     
     func updateTimerRegen () {
-        print("Timer goes Up")
         if !self.isSaved{
             if countDown < maxHealth {
                 countDown += 0.1

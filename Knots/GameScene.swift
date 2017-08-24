@@ -67,7 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoreLabel)
         
         //Start up spawn
-        spawnController(run: true)
+        spawnController()
     }
 
     func setupConeOfLightProperty() {
@@ -223,24 +223,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        //TODO Put in play and restart
-        var node:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "play"))
-        node.position = CGPoint(x: self.frame.midX, y:self.frame.midY+50)
+        //Adding Restart Button
+        var node:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "restart"))
+        node.position = CGPoint(x: self.frame.midX, y:self.frame.midY-80)
         node.size = CGSize(width: 100, height: 100)
         node.zPosition = 1000
+        node.name = "restart"
         addChild(node)
         
-        node = SKSpriteNode(texture: SKTexture(imageNamed: "restart"))
-        node.position = CGPoint(x: self.frame.midX, y:self.frame.midY-50)
-        node.size = CGSize(width: 100, height: 100)
-        node.zPosition = 1000
-        addChild(node)
-        
+        //Added Play Button
+        if (paused) {
+            node = SKSpriteNode(texture: SKTexture(imageNamed: "play"))
+            node.position = CGPoint(x: self.frame.midX, y:self.frame.midY+80)
+            node.size = CGSize(width: 100, height: 100)
+            node.zPosition = 1000
+            node.name = "play"
+            addChild(node)
+        } else {
+            node.position = CGPoint(x: self.frame.midX, y:self.frame.midY)
+        }
     }
     
     func resumeGame() {
+        self.isPaused = false
+        let play:SKNode = childNode(withName: "play")!
+        let restart:SKNode = childNode(withName: "restart")!
+        removeChildren(in: [play,restart])
+    }
+    
+    func restartGame() {
+        for object in self.children {
+            if let boat = object as? Boat {
+                self.removeChildren(in: [boat])
+            }
+        }
         
+        //Remove buttons
+        if let play = childNode(withName: "play") {
+            removeChildren(in: [play])
+        }
         
+        if let restart = childNode(withName: "restart") {
+            removeChildren(in: [restart])
+        }
+        
+        //Reset all properties
+        self.removeAllActions()
+        self.currentScore = 0
+        self.nextRound = 1
+        scoreLabel.text = "Score: \(currentScore)"
+        self.isPaused = false
+        spawnController()
     }
     
     
@@ -272,14 +305,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 pauseGame(paused:true)
             }
             if (object.name == "play") {
-                self.isPaused = false
+                resumeGame()
             }
             if (object.name == "restart"){
-                
+                object.removeFromParent()
+                restartGame()
             }
         }
-        
-        rotateLight(currentPoint: curPoint)
+        if (!self.isPaused){
+            rotateLight(currentPoint: curPoint)
+        }
     }
     
     func rotateLight (currentPoint:CGPoint ) {
@@ -302,45 +337,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      */
     
     //Called Each one a new round happens
-    func spawnController (run: Bool) {
-        
+    func spawnController () {
         let waitTimeInbetween:Double = Double(arc4random_uniform(3)+3)
-        
-        if (run) {
-            var arrayOfActions:[SKAction] = []
+        var arrayOfActions:[SKAction] = []
             
-            for _ in 1...4 {
-                //Spawn the boat
-                //Spawn 4xround number of boats
-                for _ in 1...nextRound {
-                    let spawn = SKAction.run {
-                        self.createBoat()
-                    }
-                    arrayOfActions.append(spawn)
-                    
-                    if (arc4random_uniform(2) == 0) {
-                        //Wait time between all boats
-                        let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
-                        arrayOfActions.append(waitToSpawn)
-                    }
+        for _ in 1...4 {
+            //Spawn the boat
+            //Spawn 4xround number of boats
+            for _ in 1...nextRound {
+                let spawn = SKAction.run {
+                    self.createBoat()
                 }
+                arrayOfActions.append(spawn)
                 
-                //Whether or not there's wait time between spawning more boats
                 if (arc4random_uniform(2) == 0) {
                     //Wait time between all boats
                     let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
                     arrayOfActions.append(waitToSpawn)
                 }
             }
+                
+            //Whether or not there's wait time between spawning more boats
+            if (arc4random_uniform(2) == 0) {
+                //Wait time between all boats
+                let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
+                arrayOfActions.append(waitToSpawn)
+            }
+        }
             
             
             let spawnSequence = SKAction.sequence(arrayOfActions)
             let spawnForever = SKAction.repeatForever(spawnSequence)
             self.run(spawnForever, withKey:"BoatSpawn")
-            
-        } else {
-            removeAction(forKey: "BoatSpawn")
-        }
     }
     
     func createBoat() {
@@ -383,7 +411,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (self.currentScore/10 == nextRound) {
             removeAction(forKey: "BoatSpawn")
             nextRound += 1
-            spawnController(run: true)
+            spawnController()
         }
        
     }
