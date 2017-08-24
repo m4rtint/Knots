@@ -14,24 +14,29 @@ class Boat: SKSpriteNode {
     //View stuff
     var healthBar:SKSpriteNode!
     enum BoatSizes:Int {
-        case small = 40, mid = 60, big = 80
+        case small = 2, mid = 4, big = 6
     }
     
     //Model
-    var currentHealth: Int
-    var maxHealth:Int
+    var currentHealth: Float
+    var maxHealth:Float
     var boatSize:BoatSizes
     var boatOriginLocation:CGPoint
     var boatSpeed:Double = 1.0
     var timer = Timer()
     var countDownText = SKLabelNode(text: "5")
-    var countDown:Int = 5
+    var countDown:Float = 5
     var isSaved:Bool = false
     var isLit:Bool = false
     
-    
+    //Debug
+    var gmscene: SKScene
+
     
     init(withSize: BoatSizes, gameScene:SKScene) {
+        //Debug
+        gmscene = gameScene
+        
         let boatTexture:SKTexture!
         let mySize:CGSize!
         boatSize = withSize;
@@ -44,11 +49,11 @@ class Boat: SKSpriteNode {
             boatTexture = SKTexture (imageNamed: "bigBoat")
         }
         
-        maxHealth = withSize.rawValue
+        maxHealth = Float(withSize.rawValue)
         currentHealth = maxHealth
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
         
-        mySize = CGSize (width: 20, height: CGFloat(withSize.rawValue))
+        mySize = CGSize (width: 12, height: CGFloat(withSize.rawValue)*9)
         
         boatOriginLocation = CGPoint()
         
@@ -57,7 +62,7 @@ class Boat: SKSpriteNode {
         
         let temp:Int = randomNumber()
         
-        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 10, shortSideMod: 15)
+        boatSpeed = setBoatSpeed(direction: temp, longSideMod: 18, shortSideMod: 20)
         
         
         
@@ -67,13 +72,12 @@ class Boat: SKSpriteNode {
        // healthBar.position = CGPoint(x: 30 , y: 0)
         
         countDownText = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
-        countDownText.position = CGPoint(x: 30 , y: -20)
+        countDownText.position = CGPoint(x: 0 , y: -50)
         countDownText.fontColor = SKColor.black
         
-        countDown = Int(maxHealth)
+        countDown = maxHealth
         
         setZposition(boat: self, infoBar: healthBar)
-       // addChild(healthBar)
         
         countDownText.fontSize = 30
         addChild(countDownText)
@@ -187,65 +191,58 @@ class Boat: SKSpriteNode {
     }
     
     func startTimerDown() {
-    
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector:#selector (self.updateTimerDown), userInfo: nil, repeats: true)
-        
+        timer.invalidate()
+ 
+        timer = Timer.scheduledTimer(timeInterval: 0.1,
+                                     target: self,
+                                     selector:#selector (self.updateTimerDown),
+                                     userInfo: nil,
+                                     repeats: true)
         
     }
     
     func updateTimerDown () {
-        
-        if self.isSaved == false {
+        print("Timer goes Down")
+        if !self.isSaved {
             if countDown > 0 {
-                countDown -= 10
-                countDownText.text = String(countDown)
-            } else {
-                countDownText.text = String(countDown)
-                countDownText.isHidden = true
-                self.isSaved = true
-                print(isSaved)
-                self.boatTurnedAround()
+                //When counting Down
+                countDown -= 0.5
                 
+                //Show the text
+                countDownText.run(SKAction.fadeIn(withDuration: 0.5))
+            } else {
+                //When boat is saved
+                self.alpha = 0.5
+                
+                //Hide the text
+                countDownText.run(SKAction.fadeOut(withDuration: 0.5))
+                self.isSaved = true
+                self.boatTurnedAround()
             }
         }
-        
+        countDownText.text = String(format: "%.2f",abs(countDown))
     }
     
     func startTimerRegen() {
-        
+        timer.invalidate()
 
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector:#selector (self.updateTimerRegen), userInfo: nil, repeats: true)
-        
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:#selector (self.updateTimerRegen), userInfo: nil, repeats: true)
     }
     
     func updateTimerRegen () {
-        
-        if self.isSaved == false {
-            if countDown <= maxHealth {
-                countDown += 1
-                countDownText.text = String(countDown)
-            } else {
-                
-                countDownText.text = String(countDown)
-              //  countDownText.isHidden = true
-                
-                
+        print("Timer goes Up")
+        if !self.isSaved{
+            if countDown < maxHealth {
+                countDown += 0.1
+                countDownText.run(SKAction.fadeOut(withDuration: 0.5))
             }
         }
-        
+         countDownText.text = String(format: "%.2f",abs(countDown))
     }
     
     func boatTurnedAround () {
-        
         self.removeAllActions()
-        let destPoint :CGPoint = self.boatOriginLocation
-        let vector1 = CGVector(dx: 0, dy: 1)
-        let vector2 = CGVector(dx: destPoint.x - self.position.x, dy: destPoint.y - self.position.y)
-        let angle = atan2(vector2.dy, vector2.dx) - atan2(vector1.dy, vector1.dx)
-        self.zRotation = angle
+        self.zRotation = self.zRotation + CGFloat.pi
         self.run(SKAction.move(to: self.boatOriginLocation, duration: self.boatSpeed))
-        
- 
-        
     }
 }
