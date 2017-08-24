@@ -69,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Start up spawn
         spawnController(run: true)
     }
-    
+
     func setupConeOfLightProperty() {
         //Set up cone of light Collision
         self.light = self.lightHouse.childNode(withName: "ConeOfLight") as! SKSpriteNode
@@ -157,19 +157,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //When a boat hits the Lighthouse
             print ("Boat hit the light house - Game Over")
-            self.pauseGame()
+            self.pauseGame(paused: false)
             
         }
     }
-    
-    func pauseGame() {
-        self.scene?.isPaused = true
-        for object in self.children {
-            if let boat = object as? Boat {
-                boat.timer.invalidate()
-            }
-        }
-    }
+
 
     func didEnd(_ contact: SKPhysicsContact) {
         //Setup and assign bodies
@@ -216,6 +208,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /*
+     
+     Pause and Play game state
+     
+     
+     */
+    
+    func pauseGame(paused: Bool) {
+        self.scene?.isPaused = true
+        for object in self.children {
+            if let boat = object as? Boat {
+                boat.timer.invalidate()
+            }
+        }
+        
+        //TODO Put in play and restart
+        var node:SKSpriteNode = SKSpriteNode(texture: SKTexture(imageNamed: "play"))
+        node.position = CGPoint(x: self.frame.midX, y:self.frame.midY+50)
+        node.size = CGSize(width: 100, height: 100)
+        node.zPosition = 1000
+        addChild(node)
+        
+        node = SKSpriteNode(texture: SKTexture(imageNamed: "restart"))
+        node.position = CGPoint(x: self.frame.midX, y:self.frame.midY-50)
+        node.size = CGSize(width: 100, height: 100)
+        node.zPosition = 1000
+        addChild(node)
+        
+    }
+    
+    func resumeGame() {
+        
+        
+    }
+    
+    
     
     
     /*
@@ -236,6 +264,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
+        
+        //Checking For Pause Button
+        let objectTouched:[SKNode] = nodes(at: curPoint)
+        for object in objectTouched {
+            if (object.name == "pause") {
+                pauseGame(paused:true)
+            }
+            if (object.name == "play") {
+                self.isPaused = false
+            }
+            if (object.name == "restart"){
+                
+            }
+        }
         
         rotateLight(currentPoint: curPoint)
     }
@@ -333,7 +375,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //increment number of ships
         numberOfShipsOnFrame += 1
-        
     }
     
     
