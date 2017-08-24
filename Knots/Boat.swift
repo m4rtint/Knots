@@ -37,11 +37,11 @@ class Boat: SKSpriteNode {
         boatSize = withSize;
         switch withSize {
         case .small:
-            boatTexture = SKTexture (imageNamed: "smallBoat")
+            boatTexture = SKTexture (imageNamed: "BWBoat")
         case .mid:
-            boatTexture = SKTexture (imageNamed: "midBoat")
+            boatTexture = SKTexture (imageNamed: "BWBoat")
         case .big:
-            boatTexture = SKTexture (imageNamed: "bigBoat")
+            boatTexture = SKTexture (imageNamed: "BWBoat")
         }
         
         maxHealth = Float(withSize.rawValue)
