@@ -71,7 +71,6 @@ class MenuScene: SKScene {
             
             // Present the scene
             if let view = self.view {
-                
                 let transition = SKTransition.fade(withDuration: 1.0)
                 view.presentScene(scene, transition: transition)
             }
