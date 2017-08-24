@@ -68,7 +68,7 @@ class Boat: SKSpriteNode {
         
         countDownText = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
         countDownText.position = CGPoint(x: 0 , y: -50)
-        countDownText.fontColor = SKColor.white
+        countDownText.fontColor = SKColor.black
         
         countDown = maxHealth
         
