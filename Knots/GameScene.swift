@@ -233,7 +233,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Added Play Button
         if (paused) {
-            node = SKSpriteNode(texture: SKTexture(imageNamed: "playButtonWhite"))
+            node = SKSpriteNode(texture: SKTexture(imageNamed: "play"))
             node.position = CGPoint(x: self.frame.midX, y:self.frame.midY+80)
             node.size = CGSize(width: 100, height: 100)
             node.zPosition = 1000
