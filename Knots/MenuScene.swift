@@ -19,16 +19,16 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
         print("DidMove")
-        // Add 3 frames
+        // Add all frames
         var frames: [SKTexture] = []
         
-        for i in 1...20 {
+        for i in 1...45 {
             let pic:String = "frame_\(i).png"
             frames.append(SKTexture.init(imageNamed:pic))
         }
         
         // Load the first frame as initialization
-        let backgroundNode = SKSpriteNode(imageNamed: "frame_1.png")
+        let backgroundNode = SKSpriteNode(imageNamed: "frame_0.png")
         backgroundNode.position = CGPoint(x: self.frame.midX, y:self.frame.midY)
         
         //Size
@@ -51,10 +51,10 @@ class MenuScene: SKScene {
         scoreLabel.text = "Tap To Start"
         scoreLabel.fontSize = 50
         scoreLabel.fontColor = SKColor.white
-        scoreLabel.position = CGPoint(x: frame.midX, y: -2*frame.height/10)
+        scoreLabel.position = CGPoint(x: frame.midX, y: -3*frame.height/10)
         
-        let fadein = SKAction.fadeIn(withDuration: 1)
-        let fadeout = SKAction.fadeOut(withDuration: 1)
+        let fadein = SKAction.fadeIn(withDuration: 2)
+        let fadeout = SKAction.fadeOut(withDuration: 2)
         let fadeInOut = SKAction.sequence([fadein, fadeout])
         scoreLabel.run(SKAction.repeatForever(fadeInOut))
         
