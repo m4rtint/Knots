@@ -103,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.size = CGSize(width: 150, height: 150)
         node.zRotation = CGFloat.pi
         node.xScale = node.xScale * -1;
+        node.zPosition = 5
 
 
         addChild(node)
@@ -116,6 +117,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.size = CGSize(width: 150, height: 150)
         node.zRotation = CGFloat.pi
         addChild(node)
+        node.zPosition = 5
+
         
         //Bottom left
         xCoordinate = -(self.size.width/2)+(rock.size().width/13)
@@ -125,6 +128,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.position = CGPoint(x: xCoordinate, y:yCoordinate)
         node.size = CGSize(width: 150, height: 150)
         addChild(node)
+        node.zPosition = 5
+
         
         //Bottom Right
         xCoordinate = (self.size.width/2)-(rock.size().width/13)
@@ -135,6 +140,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.size = CGSize(width: 150 , height: 150)
         node.xScale = node.xScale * -1;
         addChild(node)
+        node.zPosition = 5
+
     }
     
     
