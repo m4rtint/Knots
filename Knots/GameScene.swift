@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Scores
     var highScore:Int = 0
     var currentScore:Int = 0
-    var powerUpScore:Int = 5
+    var powerUpScore:Int = 0
     
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
@@ -202,8 +202,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 node.startTimerRegen()
                 node.isLit = false
             }
-            
-            
         }
         
         //Boats vs Frame
@@ -234,7 +232,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //updates the score and high score
     public func updateScoreBoatSaved() {
         self.currentScore += 1
-        self.powerUpScore += 1
+        
+        //Only add to power Up score if player doesn't have power up
+        if (!self.powerUp) {
+            self.powerUpScore += 1
+        }
         if self.currentScore > self.highScore {
             self.highScore = self.currentScore
         }
@@ -311,6 +313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.text = scoreOnLabel()
         self.isPaused = false
         spawnController()
+        self.powerUpScore = 0
     }
     
     
@@ -459,6 +462,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             self.powerUp = false
             screenFlashFromPowerUp()
+            self.powerUpScore = 0
         }
     }
     
@@ -513,25 +517,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spawnController()
         }
         
-        if (self.currentScore % 5 == 0) {
+        if (self.powerUpScore >= 5) {
+
+            let node = SKSpriteNode()
+            node.position = self.lightHouse.position
+            node.size = self.lightHouse.size
+            node.zPosition = 3000
+            node.color = UIColor.yellow
+            node.name = "FlashingLight"
+            addChild(node)
             
-            if (self.powerUpScore >= 5){
-                let node = SKSpriteNode()
-                node.position = self.lightHouse.position
-                node.size = self.lightHouse.size
-                node.zPosition = 3000
-                node.color = UIColor.yellow
-                node.name = "FlashingLight"
-                addChild(node)
-                
-                let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 1)
-                let fadeIn = SKAction.fadeAlpha(to: 1, duration: 1)
-                let fadeSequence = SKAction.sequence([fadeOut,fadeIn])
-                node.run(SKAction.repeatForever(fadeSequence))
-                
-                self.powerUpScore = 0
-            }
+            let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 1)
+            let fadeIn = SKAction.fadeAlpha(to: 1, duration: 1)
+            let fadeSequence = SKAction.sequence([fadeOut,fadeIn])
+            node.run(SKAction.repeatForever(fadeSequence))
             
+            self.powerUpScore = 0
             self.powerUp = true
 
         }
