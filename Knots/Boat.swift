@@ -28,15 +28,10 @@ class Boat: SKSpriteNode {
     var countDown:Float = 5
     var isSaved:Bool = false
     var isLit:Bool = false
-    
-    //Debug
-    var gmscene: SKScene
+
 
     
-    init(withSize: BoatSizes, gameScene:SKScene) {
-        //Debug
-        gmscene = gameScene
-        
+    init(withSize: BoatSizes, gameScene:SKScene) {        
         let boatTexture:SKTexture!
         let mySize:CGSize!
         boatSize = withSize;
@@ -146,21 +141,6 @@ class Boat: SKSpriteNode {
         
     }
     
-//    func updateHealth(change: Int) {
-//        if (currentHealth > 0) {
-//            currentHealth += change
-//        }
-//    }
-//    
-//    func update() {
-//        healthBar.size.height = CGFloat(currentHealth);
-//    }
-//    
-    
-    //TODO NEED TO SET SAVED/NOT SAVED BOOLEAN
-    
-    
-    
     func setBoatSpeed(direction: Int, longSideMod: Int, shortSideMod: Int) -> Double {
         
         var speed:Int = 1
@@ -192,7 +172,6 @@ class Boat: SKSpriteNode {
     
     func startTimerDown() {
         timer.invalidate()
- 
         timer = Timer.scheduledTimer(timeInterval: 0.1,
                                      target: self,
                                      selector:#selector (self.updateTimerDown),
@@ -202,7 +181,6 @@ class Boat: SKSpriteNode {
     }
     
     func updateTimerDown () {
-        print("Timer goes Down")
         if !self.isSaved {
             if countDown > 0 {
                 //When counting Down
@@ -225,12 +203,10 @@ class Boat: SKSpriteNode {
     
     func startTimerRegen() {
         timer.invalidate()
-
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:#selector (self.updateTimerRegen), userInfo: nil, repeats: true)
     }
     
     func updateTimerRegen () {
-        print("Timer goes Up")
         if !self.isSaved{
             if countDown < maxHealth {
                 countDown += 0.1
