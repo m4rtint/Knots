@@ -28,9 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScore:Int = 0
     var currentScore:Int = 0
     var powerUpScore:Int = 0
-    
-    //Sound Effects
-    var sfx:SKAudioNode = SKAudioNode()
+
     
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
@@ -85,10 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnController()
         
         //SFX Music Setup
-       // let music: SKAudioNode = SKAudioNode.init(fileNamed: "GameSceneSFX.mp3")
-       // music.autoplayLooped = true
-       // addChild(music)
-        //addChild(sfx)
+        run(SKAction.playSoundFileNamed("GameSceneSFX.mp3",waitForCompletion: true))
     }
     
     func setupConeOfLightProperty() {
@@ -362,7 +357,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
         
@@ -458,8 +452,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func screenFlashFromPowerUp() {
         //Music
-        sfx = SKAudioNode.init(fileNamed: "horn.wav")
-        sfx.run(SKAction.play())
+        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:false))
+        
         
         //Flash
         let node = SKSpriteNode()
