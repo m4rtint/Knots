@@ -29,6 +29,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentScore:Int = 0
     var powerUpScore:Int = 0
     
+    //Sound Effects
+    var sfx:SKAudioNode = SKAudioNode()
+    
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
         static let Frame :UInt32 = 0x1 << 1
@@ -80,6 +83,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Start up spawn
         spawnController()
+        
+        //SFX Music Setup
+       // let music: SKAudioNode = SKAudioNode.init(fileNamed: "GameSceneSFX.mp3")
+       // music.autoplayLooped = true
+       // addChild(music)
+        //addChild(sfx)
     }
     
     func setupConeOfLightProperty() {
@@ -448,6 +457,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func screenFlashFromPowerUp() {
+        //Music
+        sfx = SKAudioNode.init(fileNamed: "horn.wav")
+        sfx.run(SKAction.play())
+        
         //Flash
         let node = SKSpriteNode()
         node.color = UIColor.white
