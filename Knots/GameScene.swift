@@ -112,8 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.zRotation = CGFloat.pi
         node.xScale = node.xScale * -1;
         node.zPosition = 5
-
-
+        node.run(animation())
         addChild(node)
         
         //Top Right
@@ -124,8 +123,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.position = CGPoint(x: xCoordinate, y:yCoordinate)
         node.size = CGSize(width: 150, height: 150)
         node.zRotation = CGFloat.pi
-        addChild(node)
         node.zPosition = 5
+        node.run(animation())
+        addChild(node)
+        
 
         
         //Bottom left
@@ -135,8 +136,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node = SKSpriteNode(texture: rock)
         node.position = CGPoint(x: xCoordinate, y:yCoordinate)
         node.size = CGSize(width: 150, height: 150)
-        addChild(node)
         node.zPosition = 5
+        node.run(animation())
+        addChild(node)
+        
 
         
         //Bottom Right
@@ -147,9 +150,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.position = CGPoint(x: xCoordinate, y:yCoordinate)
         node.size = CGSize(width: 150 , height: 150)
         node.xScale = node.xScale * -1;
-        addChild(node)
         node.zPosition = 5
+        node.run(animation())
+        addChild(node)
 
+    }
+    
+    func animation() -> SKAction {
+        let negativeX:CGFloat = arc4random()%2==0 ? 5 : -5
+        let negativeY:CGFloat = arc4random()%2==0 ? 5 : -5
+        
+        let up = SKAction.moveBy(x: negativeX, y: negativeY, duration: 1)
+        let down = SKAction.moveBy(x:-negativeX, y:-negativeY, duration: 1)
+        let sequence = SKAction.sequence([up,down])
+        
+        return SKAction.repeatForever(sequence)
     }
     
     
@@ -585,10 +600,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.position = self.lightHouse.position
             node.size = CGSize(width: 80, height: 80)
             node.zPosition = 3000
-            node.color = UIColor.yellow
+            //node.color = UIColor.yellow
             node.name = "FlashingLight"
             node.zRotation = self.lightHouse.zRotation
-            node.texture = SKTexture (imageNamed: "PowerUP")
+            node.texture = SKTexture (imageNamed: "yellowLightHouse")
             node.anchorPoint = CGPoint(x: 0.5, y: 0.6)
             addChild(node)
             
@@ -601,12 +616,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.powerUp = true
 
         }
-        
-       
     }
-    
-   
-    
 }
 
 
