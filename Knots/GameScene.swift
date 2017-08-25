@@ -160,8 +160,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let negativeX:CGFloat = arc4random()%2==0 ? 5 : -5
         let negativeY:CGFloat = arc4random()%2==0 ? 5 : -5
         
-        let up = SKAction.moveBy(x: negativeX, y: negativeY, duration: 1)
-        let down = SKAction.moveBy(x:-negativeX, y:-negativeY, duration: 1)
+        let up = SKAction.moveBy(x: negativeX, y: negativeY, duration: 2)
+        let down = SKAction.moveBy(x:-negativeX, y:-negativeY, duration: 2)
         let sequence = SKAction.sequence([up,down])
         
         return SKAction.repeatForever(sequence)
@@ -242,14 +242,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 node.startTimerRegen()
                 node.isLit = false
             }
-        }
-        
-        //Boats vs Frame
-        if body1.categoryBitMask == PhysicsCategories.Frame &&
-            body2.categoryBitMask == PhysicsCategories.Boat {
-            
-            //Ship out of frame
-            removeChildren(in: [body2.node!])
         }
     }
     
@@ -534,7 +526,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.createBird()
         }
         
-        let wait =  SKAction.wait(forDuration: 10)
+        let wait =  SKAction.wait(forDuration: 30)
         
         for _ in 1...count {
             birdSpawns.append(birdsAnimation)
