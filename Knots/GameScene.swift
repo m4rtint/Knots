@@ -160,8 +160,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let negativeX:CGFloat = arc4random()%2==0 ? 5 : -5
         let negativeY:CGFloat = arc4random()%2==0 ? 5 : -5
         
-        let up = SKAction.moveBy(x: negativeX, y: negativeY, duration: 2)
-        let down = SKAction.moveBy(x:-negativeX, y:-negativeY, duration: 2)
+        let up = SKAction.moveBy(x: negativeX, y: negativeY, duration: 1)
+        let down = SKAction.moveBy(x:-negativeX, y:-negativeY, duration: 1)
         let sequence = SKAction.sequence([up,down])
         
         return SKAction.repeatForever(sequence)
