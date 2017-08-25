@@ -555,10 +555,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.color = UIColor.yellow
             node.name = "FlashingLight"
             node.zRotation = self.lightHouse.zRotation
+            node.texture = SKTexture (imageNamed: "powerUP")
             addChild(node)
             
-            let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 1)
-            let fadeIn = SKAction.fadeAlpha(to: 1, duration: 1)
+            let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 0.2)
+            let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.2)
             let fadeSequence = SKAction.sequence([fadeOut,fadeIn])
             node.run(SKAction.repeatForever(fadeSequence))
             
