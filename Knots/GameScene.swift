@@ -550,12 +550,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             let node = SKSpriteNode()
             node.position = self.lightHouse.position
-            node.size = self.lightHouse.size
+            node.size = CGSize(width: 80, height: 80)
             node.zPosition = 3000
             node.color = UIColor.yellow
             node.name = "FlashingLight"
             node.zRotation = self.lightHouse.zRotation
-            node.texture = SKTexture (imageNamed: "powerUP")
+            node.texture = SKTexture (imageNamed: "PowerUP")
+            node.anchorPoint = CGPoint(x: 0.5, y: 0.6)
             addChild(node)
             
             let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 0.2)
