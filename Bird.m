@@ -58,7 +58,6 @@
     
     SKAction *moveSequence = [SKAction sequence:@[moveAction,delay, remove]];
     [self runAction:moveSequence];
-    NSLog(@"Birds positions is: %f",self.position.x);
     
     
 }
