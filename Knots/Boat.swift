@@ -229,6 +229,20 @@ class Boat: SKSpriteNode {
     }
     
     func boatTurnedAround () {
+        
+        //Music
+        //self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:false))
+        
+        if (self.distance() < 100) {
+             self.scene?.run(SKAction.playSoundFileNamed("wooSpecial.wav",waitForCompletion:false))
+        } else if (arc4random()%2 == 0) {
+            self.scene?.run(SKAction.playSoundFileNamed("woo1.wav",waitForCompletion:false))
+        } else {
+            self.scene?.run(SKAction.playSoundFileNamed("woo2.wav",waitForCompletion:false))
+        }
+        print(self.distance())
+        
+         
         self.removeAllActions()
         self.zRotation = self.zRotation + CGFloat.pi
         
@@ -238,5 +252,9 @@ class Boat: SKSpriteNode {
         let moveBoat = SKAction.move(to: self.boatOriginLocation, duration: self.boatSpeed)
         
         self.run(SKAction.sequence([moveBoat,removeSelfCode]))
+    }
+    
+    func distance() -> CGFloat {
+        return CGFloat(hypotf(Float(self.position.x), Float(self.position.y)));
     }
 }

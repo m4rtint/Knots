@@ -57,7 +57,15 @@
 		5B2D51EC1F4F83D300EE24B6 /* frame_45.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D51BE1F4F83D300EE24B6 /* frame_45.png */; };
 		5B2D51EF1F4F9D4100EE24B6 /* SFXOpeningOcean.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D51EE1F4F9D4100EE24B6 /* SFXOpeningOcean.wav */; };
 		5B2D51F11F4F9F5500EE24B6 /* horn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D51F01F4F9F5500EE24B6 /* horn.wav */; };
-		5B2D51F51F5085DF00EE24B6 /* GameSceneSFX.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D51F41F5085DF00EE24B6 /* GameSceneSFX.wav */; };
+		5B4915021F50A87100493575 /* GameSceneSFX.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915011F50A87100493575 /* GameSceneSFX.wav */; };
+		5B49150A1F50AA1000493575 /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915031F50AA1000493575 /* lose.wav */; };
+		5B49150B1F50AA1000493575 /* BoatSpawn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915041F50AA1000493575 /* BoatSpawn.wav */; };
+		5B49150C1F50AA1000493575 /* fogHorn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915051F50AA1000493575 /* fogHorn.wav */; };
+		5B49150E1F50AA1000493575 /* woo1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915071F50AA1000493575 /* woo1.wav */; };
+		5B49150F1F50AA1000493575 /* woo2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915081F50AA1000493575 /* woo2.wav */; };
+		5B4915101F50AA1000493575 /* wooSpecial.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915091F50AA1000493575 /* wooSpecial.wav */; };
+		5B4915121F50AC9500493575 /* seasSounds.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915111F50AC9500493575 /* seasSounds.wav */; };
+		5B4915161F50B35300493575 /* SFXSeagulls.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915151F50B35300493575 /* SFXSeagulls.wav */; };
 		5BE49A681F4B7B2000CCF704 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE49A671F4B7B2000CCF704 /* AppDelegate.swift */; };
 		5BE49A6A1F4B7B2000CCF704 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A691F4B7B2000CCF704 /* GameScene.sks */; };
 		5BE49A6E1F4B7B2000CCF704 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE49A6D1F4B7B2000CCF704 /* GameScene.swift */; };
@@ -120,7 +128,15 @@
 		5B2D51BE1F4F83D300EE24B6 /* frame_45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame_45.png; sourceTree = "<group>"; };
 		5B2D51EE1F4F9D4100EE24B6 /* SFXOpeningOcean.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SFXOpeningOcean.wav; sourceTree = "<group>"; };
 		5B2D51F01F4F9F5500EE24B6 /* horn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = horn.wav; sourceTree = "<group>"; };
-		5B2D51F41F5085DF00EE24B6 /* GameSceneSFX.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSceneSFX.wav; sourceTree = "<group>"; };
+		5B4915011F50A87100493575 /* GameSceneSFX.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSceneSFX.wav; sourceTree = "<group>"; };
+		5B4915031F50AA1000493575 /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lose.wav; sourceTree = "<group>"; };
+		5B4915041F50AA1000493575 /* BoatSpawn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BoatSpawn.wav; sourceTree = "<group>"; };
+		5B4915051F50AA1000493575 /* fogHorn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fogHorn.wav; sourceTree = "<group>"; };
+		5B4915071F50AA1000493575 /* woo1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = woo1.wav; sourceTree = "<group>"; };
+		5B4915081F50AA1000493575 /* woo2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = woo2.wav; sourceTree = "<group>"; };
+		5B4915091F50AA1000493575 /* wooSpecial.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wooSpecial.wav; sourceTree = "<group>"; };
+		5B4915111F50AC9500493575 /* seasSounds.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = seasSounds.wav; sourceTree = "<group>"; };
+		5B4915151F50B35300493575 /* SFXSeagulls.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SFXSeagulls.wav; sourceTree = "<group>"; };
 		5BE49A641F4B7B2000CCF704 /* Knots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE49A671F4B7B2000CCF704 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BE49A691F4B7B2000CCF704 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -203,7 +219,15 @@
 		5B2D51ED1F4F9C7000EE24B6 /* sfx */ = {
 			isa = PBXGroup;
 			children = (
-				5B2D51F41F5085DF00EE24B6 /* GameSceneSFX.wav */,
+				5B4915031F50AA1000493575 /* lose.wav */,
+				5B4915041F50AA1000493575 /* BoatSpawn.wav */,
+				5B4915051F50AA1000493575 /* fogHorn.wav */,
+				5B4915111F50AC9500493575 /* seasSounds.wav */,
+				5B4915151F50B35300493575 /* SFXSeagulls.wav */,
+				5B4915071F50AA1000493575 /* woo1.wav */,
+				5B4915081F50AA1000493575 /* woo2.wav */,
+				5B4915091F50AA1000493575 /* wooSpecial.wav */,
+				5B4915011F50A87100493575 /* GameSceneSFX.wav */,
 				5B2D51F01F4F9F5500EE24B6 /* horn.wav */,
 				5B2D51EE1F4F9D4100EE24B6 /* SFXOpeningOcean.wav */,
 			);
@@ -325,24 +349,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B49150A1F50AA1000493575 /* lose.wav in Resources */,
 				5B2D51E41F4F83D300EE24B6 /* frame_37.png in Resources */,
 				5B2D51C21F4F83D300EE24B6 /* frame_3.png in Resources */,
 				5B2D51D51F4F83D300EE24B6 /* frame_22.png in Resources */,
 				5B2D51C41F4F83D300EE24B6 /* frame_5.png in Resources */,
+				5B49150C1F50AA1000493575 /* fogHorn.wav in Resources */,
 				5B2D51CD1F4F83D300EE24B6 /* frame_14.png in Resources */,
 				5B2D51E01F4F83D300EE24B6 /* frame_33.png in Resources */,
 				5B2D51EA1F4F83D300EE24B6 /* frame_43.png in Resources */,
 				5B2D51EB1F4F83D300EE24B6 /* frame_44.png in Resources */,
+				5B4915101F50AA1000493575 /* wooSpecial.wav in Resources */,
 				5B2D51BF1F4F83D300EE24B6 /* frame_0.png in Resources */,
 				5B2D51C01F4F83D300EE24B6 /* frame_1.png in Resources */,
 				5B2D51DF1F4F83D300EE24B6 /* frame_32.png in Resources */,
 				5B2D51C11F4F83D300EE24B6 /* frame_2.png in Resources */,
 				5B2D51D71F4F83D300EE24B6 /* frame_24.png in Resources */,
+				5B49150F1F50AA1000493575 /* woo2.wav in Resources */,
 				5B2D51EC1F4F83D300EE24B6 /* frame_45.png in Resources */,
 				5BE49A731F4B7B2000CCF704 /* Main.storyboard in Resources */,
 				5B2D51D81F4F83D300EE24B6 /* frame_25.png in Resources */,
 				5B2D51CC1F4F83D300EE24B6 /* frame_13.png in Resources */,
-				5B2D51F51F5085DF00EE24B6 /* GameSceneSFX.wav in Resources */,
 				5B2D51C81F4F83D300EE24B6 /* frame_9.png in Resources */,
 				5B2D51E71F4F83D300EE24B6 /* frame_40.png in Resources */,
 				5B2D51C51F4F83D300EE24B6 /* frame_6.png in Resources */,
@@ -360,10 +387,13 @@
 				5B2D51DC1F4F83D300EE24B6 /* frame_29.png in Resources */,
 				5BE49A6A1F4B7B2000CCF704 /* GameScene.sks in Resources */,
 				5B2D51E21F4F83D300EE24B6 /* frame_35.png in Resources */,
+				5B4915161F50B35300493575 /* SFXSeagulls.wav in Resources */,
 				5B2D51E31F4F83D300EE24B6 /* frame_36.png in Resources */,
 				5B2D51E91F4F83D300EE24B6 /* frame_42.png in Resources */,
 				5B2D51E81F4F83D300EE24B6 /* frame_41.png in Resources */,
 				5B2D51D31F4F83D300EE24B6 /* frame_20.png in Resources */,
+				5B4915021F50A87100493575 /* GameSceneSFX.wav in Resources */,
+				5B49150B1F50AA1000493575 /* BoatSpawn.wav in Resources */,
 				5B2D51C31F4F83D300EE24B6 /* frame_4.png in Resources */,
 				5B2D51E51F4F83D300EE24B6 /* frame_38.png in Resources */,
 				5B2D51D41F4F83D300EE24B6 /* frame_21.png in Resources */,
@@ -371,9 +401,11 @@
 				5B2D51F11F4F9F5500EE24B6 /* horn.wav in Resources */,
 				5B2D51DD1F4F83D300EE24B6 /* frame_30.png in Resources */,
 				5B2D51E11F4F83D300EE24B6 /* frame_34.png in Resources */,
+				5B49150E1F50AA1000493575 /* woo1.wav in Resources */,
 				5B2D51E61F4F83D300EE24B6 /* frame_39.png in Resources */,
 				5B2D51CE1F4F83D300EE24B6 /* frame_15.png in Resources */,
 				5B2D51CA1F4F83D300EE24B6 /* frame_11.png in Resources */,
+				5B4915121F50AC9500493575 /* seasSounds.wav in Resources */,
 				5BE49A751F4B7B2000CCF704 /* Assets.xcassets in Resources */,
 				5B2D51D21F4F83D300EE24B6 /* frame_19.png in Resources */,
 				5B2D513D1F4EA39C00EE24B6 /* MenuScene.sks in Resources */,
