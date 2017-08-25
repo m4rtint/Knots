@@ -82,6 +82,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Start up spawn
         spawnController()
+        
+        //SFX Music Setup
+        run(SKAction.playSoundFileNamed("GameSceneSFX.mp3",waitForCompletion: true))
     }
     
     func setupConeOfLightProperty() {
@@ -456,6 +459,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func screenFlashFromPowerUp() {
+        //Music
+        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:false))
+
+        
         //Flash
         let node = SKSpriteNode()
         node.color = UIColor.white
