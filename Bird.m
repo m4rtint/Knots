@@ -12,6 +12,7 @@
 
 @property float startingPosX;
 @property float startingPosY;
+@property Boolean top;
 
 @end
 
@@ -24,41 +25,42 @@
     if (self) {
         self.texture = [SKTexture textureWithImageNamed:@"Bird"];
         self.size = CGSizeMake(50, 30);
-        _startingPosX = (float)arc4random_uniform(300)*(arc4random() % 2 ? 1 : -1);
-        _startingPosY = (float)(arc4random() % 2 ? 1 : -1) * arc4random_uniform(1000);
-        self.position = CGPointMake(_startingPosX, _startingPosY);
-   
+        self.top = arc4random_uniform(2)% 2 == 0;
         
+        int negative = arc4random_uniform(10)% 2 == 0 ? 1 : -1;
+        self.startingPosX = negative * (int)arc4random_uniform(414);
+        if(self.top){
+            self.startingPosY = 468;
+        } else {
+            self.startingPosY = -468;
+        }
+        self.position = CGPointMake(_startingPosX, _startingPosY);
     }
     return self;
 }
 
 
 - (void) moveBird {
-    
-    
-    float startingPos = self.position.y;
-    
-    float tempFloat = arc4random_uniform(700);
-    
-    if (startingPos > 0 ) {
-        
-        tempFloat = tempFloat * -1;
-        
+
+    CGPoint destination;
+    int negative = arc4random_uniform(10)% 2 == 0 ? 1 : -1;
+    destination.x = negative * (float)arc4random_uniform(207);
+    if(!self.top){
+        destination.y = 468;
+    } else {
+        destination.y = -468;
     }
     
-    
-    SKAction *moveAction = [SKAction moveTo:CGPointMake((float)(arc4random() % 2 ? 1 : -1)*(arc4random_uniform(300)), 1000 + tempFloat ) duration:7];
-    //[self runAction:moveAction];
+    SKAction *moveAction = [SKAction moveTo:destination duration:7];
     
     SKAction *delay = [SKAction waitForDuration:7];
     SKAction *remove = [SKAction removeFromParent];
-
+    
     SKAction *moveSequence = [SKAction sequence:@[moveAction,delay, remove]];
     [self runAction:moveSequence];
     NSLog(@"Birds positions is: %f",self.position.x);
     
-
+    
 }
 
 

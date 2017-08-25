@@ -85,6 +85,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //SFX Music Setup
         run(SKAction.playSoundFileNamed("GameSceneSFX.mp3",waitForCompletion: true))
+        
+        //Random bird spawn
+        spawnBirdManager()
     }
     
     func setupConeOfLightProperty() {
@@ -97,7 +100,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Set up Rocks on the corner of the screens
     func setupSceneCornerRocks() {
-        //TODO SET UP THE ROCK SIZES
         //Set the x+y coordinate
         //Top Left
         var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/13)
@@ -338,6 +340,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.powerUpScore = 0
         self.powerUp = false
         self.childNode(withName: "FlashingLight")?.removeFromParent()
+        
+        //Reset bird spawn actions
+        spawnBirdManager()
+        
     }
     
     
@@ -358,13 +364,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        let bird:Bird = Bird()
-        addChild(bird)
-        bird.move()
-
-
-        
+        self.createBird()
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
         
@@ -396,6 +396,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func rotateLight (currentPoint:CGPoint ) {
+        
         let deltaX = -currentPoint.x
         let deltaY = -currentPoint.y
         
@@ -461,7 +462,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func screenFlashFromPowerUp() {
         //Music
         self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:false))
-
         
         //Flash
         let node = SKSpriteNode()
@@ -505,10 +505,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /*
  
  
-     Creating a new boat
+     Creating a new Nodes
  
  
     */
+    
+    func spawnBirdManager() {
+        let birdsAnimation = SKAction.run {
+            let count = arc4random_uniform(3)+3
+            for _ in 1...count {
+                self.createBird()
+            }
+        }
+        let wait =  SKAction.wait(forDuration: 10)
+        let sequence = SKAction.sequence([birdsAnimation, wait])
+        self.run(SKAction.repeatForever(sequence))
+    }
+    
+    func createBird() {
+        let bird:Bird = Bird()
+        self.addChild(bird)
+        bird.move()
+    }
     
     func createBoat() {
         var boatSize:Boat.BoatSizes = Boat.BoatSizes.big
