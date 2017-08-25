@@ -90,12 +90,12 @@ class MenuScene: SKScene {
             // Present the scene
             if let view = self.view {
 
-                let music: SKAudioNode = SKAudioNode.init(fileNamed: "horn.wav")
+                let music: SKAudioNode = SKAudioNode.init(fileNamed: "fogHorn.wav")
                 self.addChild(music)
                 pressOnce = true
                 
                 //Wait
-                let wait = SKAction.wait(forDuration: 6)
+                let wait = SKAction.wait(forDuration: 2)
                 
                 //Change Scene
                 let changeScene = SKAction.run({

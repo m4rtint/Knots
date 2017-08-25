@@ -85,7 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnController()
         
         //SFX Music Setup
-        run(SKAction.playSoundFileNamed("GameSceneSFX.mp3",waitForCompletion: true))
+        run(SKAction.playSoundFileNamed("GameSceneSFX.wav",waitForCompletion: true))
+        
         //Random bird spawn
         spawnBirdManager()
 
@@ -127,8 +128,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.run(animation())
         addChild(node)
         
-
-        
         //Bottom left
         xCoordinate = -(self.size.width/2)+(rock.size().width/13)
         yCoordinate = -(self.size.height/2)+(rock.size().height/15)
@@ -139,8 +138,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.zPosition = 5
         node.run(animation())
         addChild(node)
-        
-
         
         //Bottom Right
         xCoordinate = (self.size.width/2)-(rock.size().width/13)
@@ -206,6 +203,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Boat VS LightHouse
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.LightHouse {
+            
+            //Music
+            self.run(SKAction.playSoundFileNamed("lose.wav",waitForCompletion:false))
             
             //When a boat hits the Lighthouse
             userDefHighScoreUpdate ()
@@ -455,9 +455,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 arrayOfActions.append(waitToSpawn)
             }
         }
-            let spawnSequence = SKAction.sequence(arrayOfActions)
-            let spawnForever = SKAction.repeatForever(spawnSequence)
-            self.run(spawnForever, withKey:"BoatSpawn")
+        let spawnSequence = SKAction.sequence(arrayOfActions)
+        let spawnForever = SKAction.repeatForever(spawnSequence)
+        self.run(spawnForever, withKey:"BoatSpawn")
     }
     /*
  
@@ -519,6 +519,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func spawnBirdManager() {
+        
         var birdSpawns:[SKAction] = []
         
         let count = arc4random_uniform(3)+3
@@ -533,8 +534,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             birdSpawns.append(SKAction.wait(forDuration: 1))
         }
         birdSpawns.append(wait)
+        //Music
+        birdSpawns.append(SKAction.playSoundFileNamed("SFXSeagulls.wav",waitForCompletion:false))
         let sequence = SKAction.sequence(birdSpawns)
         self.run(SKAction.repeatForever(sequence))
+        
+      
     }
     
     func createBird() {
@@ -568,7 +573,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody!.affectedByGravity = false
         node.physicsBody!.categoryBitMask = PhysicsCategories.Boat
-        node.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse | PhysicsCategories.Boat
+        node.physicsBody!.collisionBitMask = PhysicsCategories.LightHouse
         node.physicsBody!.contactTestBitMask = PhysicsCategories.Light | PhysicsCategories.Frame
         
         addChild(node)
