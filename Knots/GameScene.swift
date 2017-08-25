@@ -85,7 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnController()
         
         //SFX Music Setup
-        run(SKAction.playSoundFileNamed("GameSceneSFX.wav",waitForCompletion: true))
+        let repeatSFX = SKAction.repeatForever(SKAction.playSoundFileNamed("GameSceneSFX.wav",waitForCompletion: true))
+        run(repeatSFX)
         
         //Random bird spawn
         spawnBirdManager()
@@ -203,10 +204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Boat VS LightHouse
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.LightHouse {
-            
-            //Music
-            self.run(SKAction.playSoundFileNamed("lose.wav",waitForCompletion:false))
-            
             //When a boat hits the Lighthouse
             userDefHighScoreUpdate ()
             self.pauseGame(paused: false)
@@ -380,7 +377,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let objectTouched:[SKNode] = nodes(at: curPoint)
         for object in objectTouched {
             if (object.name == "pause") {
-                pauseGame(paused:true)
+                if (!isPaused){
+                    pauseGame(paused:true)
+                }
             }
             if (object.name == "play") {
                 resumeGame()
@@ -469,7 +468,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func screenFlashFromPowerUp() {
         //Music
-        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:false))
+        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:true))
         
         //Flash
         let node = SKSpriteNode()
@@ -535,11 +534,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         birdSpawns.append(wait)
         //Music
-        birdSpawns.append(SKAction.playSoundFileNamed("SFXSeagulls.wav",waitForCompletion:false))
+        birdSpawns.append(SKAction.playSoundFileNamed("SFXSeagulls.wav",waitForCompletion:true))
         let sequence = SKAction.sequence(birdSpawns)
         self.run(SKAction.repeatForever(sequence))
         
-      
     }
     
     func createBird() {

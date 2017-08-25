@@ -234,11 +234,11 @@ class Boat: SKSpriteNode {
         //self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:false))
         
         if (self.distance() < 100) {
-             self.scene?.run(SKAction.playSoundFileNamed("wooSpecial.wav",waitForCompletion:false))
+             self.scene?.run(SKAction.playSoundFileNamed("wooSpecial.wav",waitForCompletion:true))
         } else if (arc4random()%2 == 0) {
-            self.scene?.run(SKAction.playSoundFileNamed("woo1.wav",waitForCompletion:false))
+            self.scene?.run(SKAction.playSoundFileNamed("woo1.wav",waitForCompletion:true))
         } else {
-            self.scene?.run(SKAction.playSoundFileNamed("woo2.wav",waitForCompletion:false))
+            self.scene?.run(SKAction.playSoundFileNamed("woo2.wav",waitForCompletion:true))
         }
         print(self.distance())
         

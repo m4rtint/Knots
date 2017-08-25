@@ -58,7 +58,7 @@
 		5B2D51EF1F4F9D4100EE24B6 /* SFXOpeningOcean.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D51EE1F4F9D4100EE24B6 /* SFXOpeningOcean.wav */; };
 		5B2D51F11F4F9F5500EE24B6 /* horn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D51F01F4F9F5500EE24B6 /* horn.wav */; };
 		5B4915021F50A87100493575 /* GameSceneSFX.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915011F50A87100493575 /* GameSceneSFX.wav */; };
-		5B49150A1F50AA1000493575 /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915031F50AA1000493575 /* lose.wav */; };
+		5B49150A1F50AA1000493575 /* loseGame.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915031F50AA1000493575 /* loseGame.wav */; };
 		5B49150B1F50AA1000493575 /* BoatSpawn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915041F50AA1000493575 /* BoatSpawn.wav */; };
 		5B49150C1F50AA1000493575 /* fogHorn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915051F50AA1000493575 /* fogHorn.wav */; };
 		5B49150E1F50AA1000493575 /* woo1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915071F50AA1000493575 /* woo1.wav */; };
@@ -129,7 +129,7 @@
 		5B2D51EE1F4F9D4100EE24B6 /* SFXOpeningOcean.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SFXOpeningOcean.wav; sourceTree = "<group>"; };
 		5B2D51F01F4F9F5500EE24B6 /* horn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = horn.wav; sourceTree = "<group>"; };
 		5B4915011F50A87100493575 /* GameSceneSFX.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSceneSFX.wav; sourceTree = "<group>"; };
-		5B4915031F50AA1000493575 /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lose.wav; sourceTree = "<group>"; };
+		5B4915031F50AA1000493575 /* loseGame.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = loseGame.wav; sourceTree = "<group>"; };
 		5B4915041F50AA1000493575 /* BoatSpawn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BoatSpawn.wav; sourceTree = "<group>"; };
 		5B4915051F50AA1000493575 /* fogHorn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fogHorn.wav; sourceTree = "<group>"; };
 		5B4915071F50AA1000493575 /* woo1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = woo1.wav; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 		5B2D51ED1F4F9C7000EE24B6 /* sfx */ = {
 			isa = PBXGroup;
 			children = (
-				5B4915031F50AA1000493575 /* lose.wav */,
+				5B4915031F50AA1000493575 /* loseGame.wav */,
 				5B4915041F50AA1000493575 /* BoatSpawn.wav */,
 				5B4915051F50AA1000493575 /* fogHorn.wav */,
 				5B4915111F50AC9500493575 /* seasSounds.wav */,
@@ -349,7 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B49150A1F50AA1000493575 /* lose.wav in Resources */,
+				5B49150A1F50AA1000493575 /* loseGame.wav in Resources */,
 				5B2D51E41F4F83D300EE24B6 /* frame_37.png in Resources */,
 				5B2D51C21F4F83D300EE24B6 /* frame_3.png in Resources */,
 				5B2D51D51F4F83D300EE24B6 /* frame_22.png in Resources */,
