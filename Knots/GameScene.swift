@@ -537,7 +537,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         birdSpawns.append(SKAction.playSoundFileNamed("SFXSeagulls.wav",waitForCompletion:true))
         let sequence = SKAction.sequence(birdSpawns)
         self.run(SKAction.repeatForever(sequence))
-        
     }
     
     func createBird() {

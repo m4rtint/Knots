@@ -239,6 +239,7 @@ class Boat: SKSpriteNode {
             self.scene?.run(SKAction.playSoundFileNamed("woo1.wav",waitForCompletion:true))
         } else {
             self.scene?.run(SKAction.playSoundFileNamed("woo2.wav",waitForCompletion:true))
+
         }
         print(self.distance())
         
