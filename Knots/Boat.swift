@@ -231,6 +231,12 @@ class Boat: SKSpriteNode {
     func boatTurnedAround () {
         self.removeAllActions()
         self.zRotation = self.zRotation + CGFloat.pi
-        self.run(SKAction.move(to: self.boatOriginLocation, duration: self.boatSpeed))
+        
+        let removeSelfCode = SKAction.run { 
+            self.removeFromParent()
+        }
+        let moveBoat = SKAction.move(to: self.boatOriginLocation, duration: self.boatSpeed)
+        
+        self.run(SKAction.sequence([moveBoat,removeSelfCode]))
     }
 }
