@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //Static Variables
     let rock = SKTexture(imageNamed: "cornerClouds")
@@ -16,6 +17,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lightHouse = SKSpriteNode()
     var scoreLabel = SKLabelNode()
     let userDefaults = UserDefaults.standard
+    
     
     
     //Tunable Variables
@@ -42,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Setup Physics in this world + remove gravity from the world
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector.zero
-        
+
         //Setup Corner rocks
         setupSceneCornerRocks()
         
@@ -352,6 +354,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        let bird:Bird = Bird()
+        addChild(bird)
+        bird.move()
+
+
+        
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
         
@@ -533,6 +541,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             nextRound += 1
             spawnController()
         }
+        
+
         
         if (self.powerUpScore >= 5) {
 

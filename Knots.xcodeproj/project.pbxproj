@@ -63,6 +63,7 @@
 		5BE49A751F4B7B2000CCF704 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A741F4B7B2000CCF704 /* Assets.xcassets */; };
 		5BE49A781F4B7B2000CCF704 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A761F4B7B2000CCF704 /* LaunchScreen.storyboard */; };
 		5BE49A8C1F4D00EA00CCF704 /* Boat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE49A8B1F4D00EA00CCF704 /* Boat.swift */; };
+		72FCA5CB1F4F8F990069945C /* Bird.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FCA5CA1F4F8F990069945C /* Bird.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +125,9 @@
 		5BE49A771F4B7B2000CCF704 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BE49A791F4B7B2000CCF704 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BE49A8B1F4D00EA00CCF704 /* Boat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boat.swift; sourceTree = "<group>"; };
+		72FCA5C81F4F8F990069945C /* Knots-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Knots-Bridging-Header.h"; sourceTree = "<group>"; };
+		72FCA5C91F4F8F990069945C /* Bird.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bird.h; path = ../Bird.h; sourceTree = "<group>"; };
+		72FCA5CA1F4F8F990069945C /* Bird.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bird.m; path = ../Bird.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +199,7 @@
 			children = (
 				5BE49A661F4B7B2000CCF704 /* Knots */,
 				5BE49A651F4B7B2000CCF704 /* Products */,
+				72FCA5C81F4F8F990069945C /* Knots-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -234,6 +239,8 @@
 		5BE49A801F4B85FB00CCF704 /* GameScripts */ = {
 			isa = PBXGroup;
 			children = (
+				72FCA5C91F4F8F990069945C /* Bird.h */,
+				72FCA5CA1F4F8F990069945C /* Bird.m */,
 				5BE49A6D1F4B7B2000CCF704 /* GameScene.swift */,
 				5BE49A8B1F4D00EA00CCF704 /* Boat.swift */,
 				5B2D51671F4EA56600EE24B6 /* MenuScene.swift */,
@@ -273,6 +280,7 @@
 				TargetAttributes = {
 					5BE49A631F4B7B2000CCF704 = {
 						CreatedOnToolsVersion = 8.3;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -363,6 +371,7 @@
 			files = (
 				5BE49A6E1F4B7B2000CCF704 /* GameScene.swift in Sources */,
 				5BE49A701F4B7B2000CCF704 /* GameViewController.swift in Sources */,
+				72FCA5CB1F4F8F990069945C /* Bird.m in Sources */,
 				5B2D51681F4EA56600EE24B6 /* MenuScene.swift in Sources */,
 				5BE49A681F4B7B2000CCF704 /* AppDelegate.swift in Sources */,
 				5BE49A8C1F4D00EA00CCF704 /* Boat.swift in Sources */,
@@ -488,11 +497,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Knots/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mpht.Knots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Knots-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -501,11 +513,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Knots/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mpht.Knots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Knots-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
