@@ -512,14 +512,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func spawnBirdManager() {
+        var birdSpawns:[SKAction] = []
+        
+        let count = arc4random_uniform(3)+3
         let birdsAnimation = SKAction.run {
-            let count = arc4random_uniform(3)+3
-            for _ in 1...count {
                 self.createBird()
-            }
         }
+        
         let wait =  SKAction.wait(forDuration: 10)
-        let sequence = SKAction.sequence([birdsAnimation, wait])
+        
+        for _ in 1...count {
+            birdSpawns.append(birdsAnimation)
+            birdSpawns.append(SKAction.wait(forDuration: 1))
+        }
+        birdSpawns.append(wait)
+        let sequence = SKAction.sequence(birdSpawns)
         self.run(SKAction.repeatForever(sequence))
     }
     
