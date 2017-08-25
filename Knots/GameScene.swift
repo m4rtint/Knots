@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScore:Int = 0
     var currentScore:Int = 0
     var powerUpScore:Int = 0
+
     
     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
@@ -85,9 +86,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //SFX Music Setup
         run(SKAction.playSoundFileNamed("GameSceneSFX.mp3",waitForCompletion: true))
-        
         //Random bird spawn
         spawnBirdManager()
+
     }
     
     func setupConeOfLightProperty() {
@@ -364,7 +365,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.createBird()
+
         let curTouch = touches.first!
         let curPoint = curTouch.location(in: self)
         
