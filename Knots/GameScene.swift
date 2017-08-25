@@ -380,7 +380,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let objectTouched:[SKNode] = nodes(at: curPoint)
         for object in objectTouched {
             if (object.name == "pause") {
-                pauseGame(paused:true)
+                if (!isPaused) {
+                    pauseGame(paused:true)
+                }
             }
             if (object.name == "play") {
                 resumeGame()
