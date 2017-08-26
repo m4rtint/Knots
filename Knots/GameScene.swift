@@ -63,9 +63,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(scoreLabel)
         
-        //Start up spawn for boats
-        spawnController()
-        
         //SFX Music Setup
         let repeatSFX = SKAction.repeatForever(SKAction.playSoundFileNamed("GameSceneSFX.wav",waitForCompletion: true))
         run(repeatSFX)
@@ -74,9 +71,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoringManager.gmScene = self
         addChild(scoringManager)
         
-        //Spawn System
+        //Spawn System - Birds & Boats
         addChild(spawnManager)
         spawnManager.spawnBirdManager()
+        spawnManager.spawnBoatController()
     }
     
     func setupConeOfLightProperty() {
@@ -296,13 +294,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.nextRound = 1
         
         self.isPaused = false
-        spawnController()
+        //spawnController()
         
         self.powerUp = false
         self.childNode(withName: "FlashingLight")?.removeFromParent()
         
         //Reset bird spawn actions
         spawnManager.spawnBirdManager()
+        spawnManager.spawnBoatController()
         
     }
     
@@ -373,46 +372,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    /*
-     
-     
-     Spawn Mechanics
-     
-     
-     */
-    
-    //Called Each one a new round happens
-    func spawnController () {
-        let waitTimeInbetween:Double = Double(arc4random_uniform(3)+3)
-        var arrayOfActions:[SKAction] = []
-            
-        for _ in 1...4 {
-            //Spawn the boat
-            //Spawn 4xround number of boats
-            for _ in 1...nextRound {
-                let spawn = SKAction.run {
-                    self.createBoat()
-                }
-                arrayOfActions.append(spawn)
-                
-                if (arc4random_uniform(2) == 0) {
-                    //Wait time between all boats
-                    let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
-                    arrayOfActions.append(waitToSpawn)
-                }
-            }
-                
-            //Whether or not there's wait time between spawning more boats
-            if (arc4random_uniform(2) == 0) {
-                //Wait time between all boats
-                let waitToSpawn = SKAction.wait(forDuration: waitTimeInbetween)
-                arrayOfActions.append(waitToSpawn)
-            }
-        }
-        let spawnSequence = SKAction.sequence(arrayOfActions)
-        let spawnForever = SKAction.repeatForever(spawnSequence)
-        self.run(spawnForever, withKey:"BoatSpawn")
-    }
     /*
  
  
@@ -511,7 +470,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (scoringManager.currentScore/10 == nextRound) {
             removeAction(forKey: "BoatSpawn")
             nextRound += 1
-            spawnController()
+            spawnManager.spawnBoatController()
         }
         
 
