@@ -376,58 +376,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    
-//    /*
-// 
-// 
-//     Power up
-// 
-// 
-//    */
-//    
-//    func screenFlashFromPowerUp() {
-//        //Music
-//        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:true))
-//        
-//        //Flash
-//        let node = SKSpriteNode()
-//        node.color = UIColor.white
-//        node.size = frame.size
-//        node.zPosition = 2000
-//        node.position = CGPoint(x:0, y:0)
-//        addChild(node)
-//        
-//        
-//        let transition = SKAction.fadeOut(withDuration: 1)
-//        let fadeOut = SKAction.run {
-//            node.removeFromParent()
-//        }
-//        
-//        
-//        node.run(SKAction.sequence([transition,fadeOut]))
-//        
-//        //remove Flashing Node
-//        self.childNode(withName: "FlashingLight")?.removeFromParent()
-//    }
-//   
-//    
-//    
-//    func pressedPowerUp() {
-//        
-//        if (self.powerUp) {
-//            for object in self.children {
-//                if let boat = object as? Boat {
-//                    boat.saveBoat(powerUp: true)
-//                }
-//            }
-//            self.powerUp = false
-//            screenFlashFromPowerUp()
-//            scoringManager.powerUpScore = 0
-//        }
-//    }
-//    
-    
-    
     /*
  
  
@@ -486,7 +434,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.position = self.lightHouse.position
             node.size = CGSize(width: 80, height: 80)
             node.zPosition = 3000
-            //node.color = UIColor.yellow
             node.name = "FlashingLight"
             node.zRotation = self.lightHouse.zRotation
             node.texture = SKTexture (imageNamed: "yellowLightHouse")
