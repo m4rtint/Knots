@@ -15,7 +15,7 @@ class ScoringSystem: SKNode{
     var highScore:Int = 0
     var currentScore:Int = 0
     var powerUpScore:Int = 0
-    var gmScene:GameScene?
+    var gmScene:GameScene!
     /*
      
      Score Manager
@@ -54,13 +54,13 @@ class ScoringSystem: SKNode{
         self.currentScore += 1
         
             //Only add to power Up score if player doesn't have power up
-            if !(gmScene?.powerUp)!  {
+            if !self.gmScene.powerUp  {
                 self.powerUpScore += 1
             }
             if self.currentScore > self.highScore {
                 self.highScore = self.currentScore
             }
-            gmScene?.scoreLabel.text = scoreOnLabel()
+            gmScene.scoreLabel.text = scoreOnLabel()
         
     }
     
@@ -72,7 +72,7 @@ class ScoringSystem: SKNode{
     func resetScore(){
         self.currentScore = 0
         self.powerUpScore = 0
-        gmScene?.scoreLabel.text = scoreOnLabel()
+        self.gmScene.scoreLabel.text = scoreOnLabel()
         
     }
 

@@ -10,6 +10,8 @@ import Foundation
 import SpriteKit
 
 class SpawnSystem: SKNode {
+    var gmScene:GameScene!
+
     
     /*
  
@@ -18,7 +20,6 @@ class SpawnSystem: SKNode {
  
     */
     func spawnBirdManager() {
-        
         var birdSpawns:[SKAction] = []
         
         let count = arc4random_uniform(3)+3
@@ -64,9 +65,9 @@ class SpawnSystem: SKNode {
         for _ in 1...4 {
             //Spawn the boat
             //Spawn 4xround number of boats
-            for _ in 1...(scene as! GameScene).nextRound {
+            for _ in 1...gmScene.nextRound {
                 let spawn = SKAction.run {
-                    (self.scene as! GameScene).createBoat()
+                    self.gmScene.createBoat()
                 }
                 arrayOfActions.append(spawn)
                 

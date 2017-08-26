@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class PowerUpSystem: SKNode{
-    var gmScene:GameScene?
+    var gmScene:GameScene!
     /*
      
      
@@ -26,10 +26,10 @@ class PowerUpSystem: SKNode{
         //Flash
         let node = SKSpriteNode()
         node.color = UIColor.white
-        node.size = (gmScene?.frame.size)!
+        node.size = self.gmScene.frame.size
         node.zPosition = 2000
         node.position = CGPoint(x:0, y:0)
-        gmScene?.addChild(node)
+        self.gmScene.addChild(node)
         
         
         let transition = SKAction.fadeOut(withDuration: 1)
@@ -41,22 +41,22 @@ class PowerUpSystem: SKNode{
         node.run(SKAction.sequence([transition,fadeOut]))
         
         //remove Flashing Node
-        gmScene?.childNode(withName: "FlashingLight")?.removeFromParent()
+        self.gmScene.childNode(withName: "FlashingLight")?.removeFromParent()
     }
     
     
     
     func pressedPowerUp() {
         
-        if (gmScene?.powerUp)! {
-            for object in (gmScene?.children)! {
+        if self.gmScene.powerUp {
+            for object in self.gmScene.children {
                 if let boat = object as? Boat {
                     boat.saveBoat(powerUp: true)
                 }
             }
-            gmScene?.powerUp = false
+            self.gmScene.powerUp = false
             screenFlashFromPowerUp()
-            gmScene?.scoringManager.powerUpScore = 0
+            self.gmScene.scoringManager.powerUpScore = 0
         }
     }
     

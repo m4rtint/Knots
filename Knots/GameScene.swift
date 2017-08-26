@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //Static Variables
-    let cloud = SKTexture(imageNamed: "cornerClouds")
+    let rock = SKTexture(imageNamed: "cornerClouds")
     let DegreesToRadians = CGFloat.pi / 180
     var light = SKSpriteNode()
     var lightHouse = SKSpriteNode()
@@ -30,7 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let powerUpManager:PowerUpSystem = PowerUpSystem()
 
     
-    struct PhysicsCategories {
+     struct PhysicsCategories {
         static let None : UInt32 = 0x1 << 0
         static let Frame :UInt32 = 0x1 << 1
         static let Boat : UInt32 = 0x1 << 2
@@ -47,13 +47,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupSceneCornerRocks()
         
         //Setup Lighthouse Collision
-        setupLightHouse()
+        self.lightHouse = self.childNode(withName:"LightHouse") as! SKSpriteNode
+        self.lightHouse.physicsBody!.categoryBitMask = PhysicsCategories.LightHouse
+        self.lightHouse.physicsBody!.collisionBitMask = PhysicsCategories.Boat
+        self.lightHouse.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
         
         //Setup cone of light
         setupConeOfLightProperty()
         
         //Setup Score Label
-        setupScoreLabel()
+        scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
+        scoreLabel.text = scoringManager.scoreOnLabel()
+        scoreLabel.fontSize = 25
+        scoreLabel.fontColor = SKColor.white
+        scoreLabel.position = CGPoint(x: frame.midX, y: 3*frame.height/10)
+        
         addChild(scoreLabel)
         
         //SFX Music Setup
@@ -65,6 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoringManager)
         
         //Spawn System - Birds & Boats
+        spawnManager.gmScene = self
         addChild(spawnManager)
         spawnManager.spawnBirdManager()
         spawnManager.spawnBoatController()
@@ -72,22 +81,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Power Up System
         powerUpManager.gmScene = self
         addChild(powerUpManager)
-    }
-    
-    
-    /*
-     
-     
-     Setup everything
-     
-     
-     */
-    
-    func setupLightHouse() {
-        self.lightHouse = self.childNode(withName:"LightHouse") as! SKSpriteNode
-        self.lightHouse.physicsBody!.categoryBitMask = PhysicsCategories.LightHouse
-        self.lightHouse.physicsBody!.collisionBitMask = PhysicsCategories.Boat
-        self.lightHouse.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
     }
     
     func setupConeOfLightProperty() {
@@ -98,44 +91,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.light.physicsBody!.contactTestBitMask = PhysicsCategories.Boat
     }
     
-    func setupScoreLabel() {
-        //Setup Score Label
-        scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
-        scoreLabel.text = scoringManager.scoreOnLabel()
-        scoreLabel.fontSize = 25
-        scoreLabel.fontColor = SKColor.white
-        scoreLabel.position = CGPoint(x: frame.midX, y: 3*frame.height/10)
-    }
-
     //Set up Rocks on the corner of the screens
     func setupSceneCornerRocks() {
         //Set the x+y coordinate
         //Top Left
-        var xCoordinate:CGFloat = -(self.size.width/2)+(cloud.size().width/13)
-        var yCoordinate:CGFloat = (self.size.height/2)-(cloud.size().height/15)
+        var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/13)
+        var yCoordinate:CGFloat = (self.size.height/2)-(rock.size().height/15)
         
-        var node = setupCloud(xCoordinate: xCoordinate, yCoordinate: yCoordinate)
+        var node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        node.size = CGSize(width: 150, height: 150)
+        node.zRotation = CGFloat.pi
         node.xScale = node.xScale * -1;
+        node.zPosition = 5
+        node.run(animation())
         addChild(node)
         
         //Top Right
-        xCoordinate = (self.size.width/2)-(cloud.size().width/13)
-        yCoordinate = (self.size.height/2)-(cloud.size().height/15)
+        xCoordinate = (self.size.width/2)-(rock.size().width/13)
+        yCoordinate = (self.size.height/2)-(rock.size().height/15)
         
-        addChild(setupCloud(xCoordinate: xCoordinate, yCoordinate: yCoordinate))
+        node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        node.size = CGSize(width: 150, height: 150)
+        node.zRotation = CGFloat.pi
+        node.zPosition = 5
+        node.run(animation())
+        addChild(node)
         
         //Bottom left
-        xCoordinate = -(self.size.width/2)+(cloud.size().width/13)
-        yCoordinate = -(self.size.height/2)+(cloud.size().height/15)
-
-        addChild(setupCloud(xCoordinate: xCoordinate, yCoordinate: yCoordinate))
+        xCoordinate = -(self.size.width/2)+(rock.size().width/13)
+        yCoordinate = -(self.size.height/2)+(rock.size().height/15)
+        
+        node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        node.size = CGSize(width: 150, height: 150)
+        node.zPosition = 5
+        node.run(animation())
+        addChild(node)
         
         //Bottom Right
-        xCoordinate = (self.size.width/2)-(cloud.size().width/13)
-        yCoordinate = -(self.size.height/2)+(cloud.size().height/15)
-       
-        node = setupCloud(xCoordinate: xCoordinate, yCoordinate: yCoordinate)
+        xCoordinate = (self.size.width/2)-(rock.size().width/13)
+        yCoordinate = -(self.size.height/2)+(rock.size().height/15)
+        
+        node = SKSpriteNode(texture: rock)
+        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
+        node.size = CGSize(width: 150 , height: 150)
         node.xScale = node.xScale * -1;
+        node.zPosition = 5
+        node.run(animation())
         addChild(node)
 
     }
@@ -149,16 +153,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let sequence = SKAction.sequence([up,down])
         
         return SKAction.repeatForever(sequence)
-    }
-    
-    func setupCloud(xCoordinate: CGFloat, yCoordinate: CGFloat) -> SKSpriteNode {
-        let node = SKSpriteNode(texture: cloud)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        node.size = CGSize(width: 150 , height: 150)
-        node.xScale = node.xScale * -1;
-        node.zPosition = 5
-        node.run(animation())
-        return node
     }
     
     
@@ -306,6 +300,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.nextRound = 1
         
         self.isPaused = false
+        //spawnController()
         
         self.powerUp = false
         self.childNode(withName: "FlashingLight")?.removeFromParent()
