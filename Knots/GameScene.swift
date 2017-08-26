@@ -30,6 +30,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScore:Int = 0
     var currentScore:Int = 0
     var powerUpScore:Int = 0
+    
+    //Manager
+    var spawnManager:SpawnSystem = SpawnSystem()
 
     
     struct PhysicsCategories {
@@ -81,16 +84,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(scoreLabel)
         
-        //Start up spawn
+        //Start up spawn for boats
         spawnController()
         
         //SFX Music Setup
         let repeatSFX = SKAction.repeatForever(SKAction.playSoundFileNamed("GameSceneSFX.wav",waitForCompletion: true))
         run(repeatSFX)
         
-        //Random bird spawn
-        spawnBirdManager()
-
+        //Spawn System
+        addChild(spawnManager)
+        spawnManager.spawnBirdManager()
+        
+       
     }
     
     func setupConeOfLightProperty() {
@@ -347,7 +352,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.childNode(withName: "FlashingLight")?.removeFromParent()
         
         //Reset bird spawn actions
-        spawnBirdManager()
+        //spawnBirdManager()
         
     }
     
@@ -516,36 +521,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
  
  
     */
-    
-    func spawnBirdManager() {
-        
-        var birdSpawns:[SKAction] = []
-        
-        let count = arc4random_uniform(3)+3
-        let birdsAnimation = SKAction.run {
-                self.createBird()
-        }
-        
-        let wait =  SKAction.wait(forDuration: 30)
-        
-        for _ in 1...count {
-            birdSpawns.append(birdsAnimation)
-            birdSpawns.append(SKAction.wait(forDuration: 1))
-        }
-        birdSpawns.append(wait)
-        //Music
-        birdSpawns.append(SKAction.playSoundFileNamed("SFXSeagulls.wav",waitForCompletion:false))
-        let sequence = SKAction.sequence(birdSpawns)
-        self.run(SKAction.repeatForever(sequence))
-        
-      
-    }
-    
-    func createBird() {
-        let bird:Bird = Bird()
-        self.addChild(bird)
-        bird.move()
-    }
+
     
     func createBoat() {
         var boatSize:Boat.BoatSizes = Boat.BoatSizes.big
