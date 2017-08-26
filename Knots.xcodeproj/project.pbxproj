@@ -68,6 +68,7 @@
 		5B4915181F50C4AC00493575 /* SFXSeagulls.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5B4915171F50C4AC00493575 /* SFXSeagulls.wav */; };
 		5B49151A1F50EB1F00493575 /* SpawnSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4915191F50EB1F00493575 /* SpawnSystem.swift */; };
 		5B49151C1F510CC400493575 /* ScoringSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B49151B1F510CC400493575 /* ScoringSystem.swift */; };
+		5BD69BEF1F517FF900DA8D5A /* PowerUpSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD69BEE1F517FF900DA8D5A /* PowerUpSystem.swift */; };
 		5BE49A681F4B7B2000CCF704 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE49A671F4B7B2000CCF704 /* AppDelegate.swift */; };
 		5BE49A6A1F4B7B2000CCF704 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5BE49A691F4B7B2000CCF704 /* GameScene.sks */; };
 		5BE49A6E1F4B7B2000CCF704 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE49A6D1F4B7B2000CCF704 /* GameScene.swift */; };
@@ -141,6 +142,7 @@
 		5B4915171F50C4AC00493575 /* SFXSeagulls.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SFXSeagulls.wav; sourceTree = "<group>"; };
 		5B4915191F50EB1F00493575 /* SpawnSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpawnSystem.swift; sourceTree = "<group>"; };
 		5B49151B1F510CC400493575 /* ScoringSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoringSystem.swift; sourceTree = "<group>"; };
+		5BD69BEE1F517FF900DA8D5A /* PowerUpSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PowerUpSystem.swift; sourceTree = "<group>"; };
 		5BE49A641F4B7B2000CCF704 /* Knots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE49A671F4B7B2000CCF704 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BE49A691F4B7B2000CCF704 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				5B2D51671F4EA56600EE24B6 /* MenuScene.swift */,
 				5B4915191F50EB1F00493575 /* SpawnSystem.swift */,
 				5B49151B1F510CC400493575 /* ScoringSystem.swift */,
+				5BD69BEE1F517FF900DA8D5A /* PowerUpSystem.swift */,
 			);
 			name = GameScripts;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				5B49151C1F510CC400493575 /* ScoringSystem.swift in Sources */,
 				5BE49A6E1F4B7B2000CCF704 /* GameScene.swift in Sources */,
 				5BE49A701F4B7B2000CCF704 /* GameViewController.swift in Sources */,
+				5BD69BEF1F517FF900DA8D5A /* PowerUpSystem.swift in Sources */,
 				72FCA5CB1F4F8F990069945C /* Bird.m in Sources */,
 				5B2D51681F4EA56600EE24B6 /* MenuScene.swift in Sources */,
 				5BE49A681F4B7B2000CCF704 /* AppDelegate.swift in Sources */,

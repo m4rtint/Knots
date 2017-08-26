@@ -27,6 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Manager
     let spawnManager:SpawnSystem = SpawnSystem()
     let scoringManager:ScoringSystem = ScoringSystem()
+    let powerUpManager:PowerUpSystem = PowerUpSystem()
 
     
     struct PhysicsCategories {
@@ -75,6 +76,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(spawnManager)
         spawnManager.spawnBirdManager()
         spawnManager.spawnBoatController()
+        
+        //Power Up System
+        powerUpManager.gmScene = self
+        addChild(powerUpManager)
     }
     
     func setupConeOfLightProperty() {
@@ -347,7 +352,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 curPoint.x > -self.lightHouse.size.width/2 &&
                 curPoint.y < self.lightHouse.size.height/2 &&
                 curPoint.y > -self.lightHouse.size.height/2) {
-                pressedPowerUp()
+                powerUpManager.pressedPowerUp()
                 
             }
         }
@@ -372,55 +377,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    /*
- 
- 
-     Power up
- 
- 
-    */
-    
-    func screenFlashFromPowerUp() {
-        //Music
-        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:true))
-        
-        //Flash
-        let node = SKSpriteNode()
-        node.color = UIColor.white
-        node.size = frame.size
-        node.zPosition = 2000
-        node.position = CGPoint(x:0, y:0)
-        addChild(node)
-        
-        
-        let transition = SKAction.fadeOut(withDuration: 1)
-        let fadeOut = SKAction.run {
-            node.removeFromParent()
-        }
-        
-        
-        node.run(SKAction.sequence([transition,fadeOut]))
-        
-        //remove Flashing Node
-        self.childNode(withName: "FlashingLight")?.removeFromParent()
-    }
-   
-    
-    
-    func pressedPowerUp() {
-        
-        if (self.powerUp) {
-            for object in self.children {
-                if let boat = object as? Boat {
-                    boat.saveBoat(powerUp: true)
-                }
-            }
-            self.powerUp = false
-            screenFlashFromPowerUp()
-            scoringManager.powerUpScore = 0
-        }
-    }
-    
+//    /*
+// 
+// 
+//     Power up
+// 
+// 
+//    */
+//    
+//    func screenFlashFromPowerUp() {
+//        //Music
+//        self.run(SKAction.playSoundFileNamed("horn.wav",waitForCompletion:true))
+//        
+//        //Flash
+//        let node = SKSpriteNode()
+//        node.color = UIColor.white
+//        node.size = frame.size
+//        node.zPosition = 2000
+//        node.position = CGPoint(x:0, y:0)
+//        addChild(node)
+//        
+//        
+//        let transition = SKAction.fadeOut(withDuration: 1)
+//        let fadeOut = SKAction.run {
+//            node.removeFromParent()
+//        }
+//        
+//        
+//        node.run(SKAction.sequence([transition,fadeOut]))
+//        
+//        //remove Flashing Node
+//        self.childNode(withName: "FlashingLight")?.removeFromParent()
+//    }
+//   
+//    
+//    
+//    func pressedPowerUp() {
+//        
+//        if (self.powerUp) {
+//            for object in self.children {
+//                if let boat = object as? Boat {
+//                    boat.saveBoat(powerUp: true)
+//                }
+//            }
+//            self.powerUp = false
+//            screenFlashFromPowerUp()
+//            scoringManager.powerUpScore = 0
+//        }
+//    }
+//    
     
     
     /*
