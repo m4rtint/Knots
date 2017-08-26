@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //Static Variables
-    let rock = SKTexture(imageNamed: "cornerClouds")
+    let cloud = SKTexture(imageNamed: "cornerClouds")
     let DegreesToRadians = CGFloat.pi / 180
     var light = SKSpriteNode()
     var lightHouse = SKSpriteNode()
@@ -95,51 +95,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupSceneCornerRocks() {
         //Set the x+y coordinate
         //Top Left
-        var xCoordinate:CGFloat = -(self.size.width/2)+(rock.size().width/13)
-        var yCoordinate:CGFloat = (self.size.height/2)-(rock.size().height/15)
+        var xCoordinate:CGFloat = -(self.size.width/2)+(cloud.size().width/13)
+        var yCoordinate:CGFloat = (self.size.height/2)-(cloud.size().height/15)
         
-        var node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        node.size = CGSize(width: 150, height: 150)
+        var node = setupCloudCorner(xCoord: xCoordinate, yCoord: yCoordinate)
         node.zRotation = CGFloat.pi
-        node.xScale = node.xScale * -1;
-        node.zPosition = 5
-        node.run(animation())
+        node.xScale *= -1;
         addChild(node)
         
         //Top Right
-        xCoordinate = (self.size.width/2)-(rock.size().width/13)
-        yCoordinate = (self.size.height/2)-(rock.size().height/15)
+        xCoordinate = (self.size.width/2)-(cloud.size().width/13)
+        yCoordinate = (self.size.height/2)-(cloud.size().height/15)
         
-        node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        node.size = CGSize(width: 150, height: 150)
+        node = setupCloudCorner(xCoord: xCoordinate, yCoord: yCoordinate)
         node.zRotation = CGFloat.pi
-        node.zPosition = 5
-        node.run(animation())
         addChild(node)
         
         //Bottom left
-        xCoordinate = -(self.size.width/2)+(rock.size().width/13)
-        yCoordinate = -(self.size.height/2)+(rock.size().height/15)
+        xCoordinate = -(self.size.width/2)+(cloud.size().width/13)
+        yCoordinate = -(self.size.height/2)+(cloud.size().height/15)
         
-        node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        node.size = CGSize(width: 150, height: 150)
-        node.zPosition = 5
+        node = setupCloudCorner(xCoord: xCoordinate, yCoord: yCoordinate)
         node.run(animation())
         addChild(node)
         
         //Bottom Right
-        xCoordinate = (self.size.width/2)-(rock.size().width/13)
-        yCoordinate = -(self.size.height/2)+(rock.size().height/15)
+        xCoordinate = (self.size.width/2)-(cloud.size().width/13)
+        yCoordinate = -(self.size.height/2)+(cloud.size().height/15)
         
-        node = SKSpriteNode(texture: rock)
-        node.position = CGPoint(x: xCoordinate, y:yCoordinate)
-        node.size = CGSize(width: 150 , height: 150)
-        node.xScale = node.xScale * -1;
-        node.zPosition = 5
-        node.run(animation())
+        node = setupCloudCorner(xCoord: xCoordinate, yCoord: yCoordinate)
+        node.xScale *= -1;
         addChild(node)
 
     }
@@ -153,6 +138,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let sequence = SKAction.sequence([up,down])
         
         return SKAction.repeatForever(sequence)
+    }
+    
+    func setupCloudCorner(xCoord: CGFloat, yCoord: CGFloat) -> SKSpriteNode {
+        let node = SKSpriteNode(texture: cloud)
+        node.position = CGPoint(x: xCoord, y:yCoord)
+        node.size = CGSize(width: 150, height: 150)
+        node.zPosition = 5
+        node.run(animation())
+        return node
     }
     
     
