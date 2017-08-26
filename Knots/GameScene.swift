@@ -16,9 +16,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var light = SKSpriteNode()
     var lightHouse = SKSpriteNode()
     var scoreLabel = SKLabelNode()
-    let userDefaults = UserDefaults.standard
-    
-    
     
     //Tunable Variables
     let lightHouseRotationTimeTaken:Double = 0.5
@@ -26,13 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Counters
     var nextRound:Int = 1
-        //Scores
-    var highScore:Int = 0
-    var currentScore:Int = 0
-    var powerUpScore:Int = 0
     
     //Manager
-    var spawnManager:SpawnSystem = SpawnSystem()
+    let spawnManager:SpawnSystem = SpawnSystem()
+    let scoringManager:ScoringSystem = ScoringSystem()
 
     
     struct PhysicsCategories {
@@ -42,8 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Light : UInt32 = 0x1 << 3
         static let LightHouse : UInt32 = 0x1 << 4
     }
-    
-    
+
     override func didMove(to view: SKView) {
         //Setup Physics in this world + remove gravity from the world
         self.physicsWorld.contactDelegate = self
@@ -61,23 +54,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Setup cone of light
         setupConeOfLightProperty()
         
-        //Setup Scene Physics
-        physicsBody = SKPhysicsBody(rectangleOf: self.size)
-        physicsBody!.categoryBitMask = PhysicsCategories.Frame
-        physicsBody!.collisionBitMask = PhysicsCategories.None
-        physicsBody!.contactTestBitMask = PhysicsCategories.Boat
-        
-        //Setup High score
-        if userDefaults.value(forKey: "highScore") != nil{
-            highScore = userDefaults.value(forKey: "highScore") as! Int
-        } else {
-            userDefaults.set(0, forKey: "highScore")
-            highScore = 0
-        }
-        
         //Setup Score Label
         scoreLabel = SKLabelNode(fontNamed: "AmericanTypewriter")
-        scoreLabel.text = scoreOnLabel()
+        scoreLabel.text = scoringManager.scoreOnLabel()
         scoreLabel.fontSize = 25
         scoreLabel.fontColor = SKColor.white
         scoreLabel.position = CGPoint(x: frame.midX, y: 3*frame.height/10)
@@ -91,11 +70,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let repeatSFX = SKAction.repeatForever(SKAction.playSoundFileNamed("GameSceneSFX.wav",waitForCompletion: true))
         run(repeatSFX)
         
+        //Scoring System
+        scoringManager.gmScene = self
+        addChild(scoringManager)
+        
         //Spawn System
         addChild(spawnManager)
         spawnManager.spawnBirdManager()
-        
-       
     }
     
     func setupConeOfLightProperty() {
@@ -210,7 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if body1.categoryBitMask == PhysicsCategories.Boat &&
             body2.categoryBitMask == PhysicsCategories.LightHouse {
             //When a boat hits the Lighthouse
-            userDefHighScoreUpdate ()
+            scoringManager.userDefHighScoreUpdate ()
             self.pauseGame(paused: false)
             
         }
@@ -245,40 +226,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 node.isLit = false
             }
         }
-    }
-    
-    /*
-     
-     Score Manager
-     
-     */
-    
-    //Update user Default highscore
-    func userDefHighScoreUpdate () {
-        //Check if High score is the higher than what's stored in userDefaults
-        if let currentHighScore = userDefaults.value(forKey: "highScore") as? Int {
-            if self.highScore > currentHighScore {
-                userDefaults.set(self.highScore, forKey: "highScore")
-            }
-        }
-    }
-    
-    //updates the score and high score
-    public func updateScoreBoatSaved() {
-        self.currentScore += 1
-        
-        //Only add to power Up score if player doesn't have power up
-        if (!self.powerUp) {
-            self.powerUpScore += 1
-        }
-        if self.currentScore > self.highScore {
-            self.highScore = self.currentScore
-        }
-        scoreLabel.text = scoreOnLabel()
-    }
-    
-    func scoreOnLabel() ->String {
-        return "Score: \(currentScore)    HighScore: \(highScore)"
     }
     
     /*
@@ -342,17 +289,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Reset all properties
         self.removeAllActions()
-        self.currentScore = 0
+        
+        //Reset Score
+        scoringManager.resetScore()
+        
         self.nextRound = 1
-        scoreLabel.text = scoreOnLabel()
+        
         self.isPaused = false
         spawnController()
-        self.powerUpScore = 0
+        
         self.powerUp = false
         self.childNode(withName: "FlashingLight")?.removeFromParent()
         
         //Reset bird spawn actions
-        //spawnBirdManager()
+        spawnManager.spawnBirdManager()
         
     }
     
@@ -508,7 +458,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             self.powerUp = false
             screenFlashFromPowerUp()
-            self.powerUpScore = 0
+            scoringManager.powerUpScore = 0
         }
     }
     
@@ -558,7 +508,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         
-        if (self.currentScore/10 == nextRound) {
+        if (scoringManager.currentScore/10 == nextRound) {
             removeAction(forKey: "BoatSpawn")
             nextRound += 1
             spawnController()
@@ -566,7 +516,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 
         
-        if (self.powerUpScore >= 5) {
+        if (scoringManager.powerUpScore >= 5) {
 
             let node = SKSpriteNode()
             node.position = self.lightHouse.position
@@ -584,7 +534,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let fadeSequence = SKAction.sequence([fadeOut,fadeIn])
             node.run(SKAction.repeatForever(fadeSequence))
             
-            self.powerUpScore = 0
+            scoringManager.powerUpScore = 0
             self.powerUp = true
 
         }

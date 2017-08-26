@@ -28,10 +28,8 @@ class Boat: SKSpriteNode {
     var countDown:Float = 5
     var isSaved:Bool = false
     var isLit:Bool = false
-
-
     
-    init(withSize: BoatSizes, gameScene:SKScene) {        
+    init(withSize: BoatSizes, gameScene:GameScene) {
         let boatTexture:SKTexture!
         let mySize:CGSize!
         boatSize = withSize;
@@ -43,7 +41,6 @@ class Boat: SKSpriteNode {
         case .big:
             boatTexture = SKTexture (imageNamed: "BWBoat")
         }
-        
         maxHealth = Float(withSize.rawValue)
         currentHealth = maxHealth
         healthBar = SKSpriteNode(color:SKColor.black, size: CGSize(width: 15, height:CGFloat(withSize.rawValue)))
@@ -205,8 +202,7 @@ class Boat: SKSpriteNode {
         self.isSaved = true
         self.boatTurnedAround()
         if (!powerUp) {
-            let scene = self.scene as? GameScene
-            scene?.updateScoreBoatSaved()
+            (scene as! GameScene).scoringManager.updateScoreBoatSaved()
         }
         
         self.physicsBody = nil
